@@ -1,11 +1,12 @@
 import {Box, Input} from 'native-base';
-import React from 'react';
+import React, {useRef, useEffect} from 'react';
 import {
   StyleSheet,
   Text,
   View,
   Dimensions,
   TouchableOpacity,
+  Animated,
 } from 'react-native';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import Icon from 'react-native-vector-icons/AntDesign';
@@ -14,6 +15,16 @@ const height = Dimensions.get('window').height;
 const width = Dimensions.get('window').width;
 
 const Home = ({navigation}) => {
+  const fadeAnim = useRef(new Animated.Value(0)).current;
+
+  useEffect(() => {
+    Animated.timing(fadeAnim, {
+      toValue: 1,
+      duration: 1000,
+      useNativeDriver: true,
+    }).start();
+  }, [fadeAnim]);
+
   const onPressHandler = () => {
     navigation.navigate('Signup');
   };
@@ -27,24 +38,25 @@ const Home = ({navigation}) => {
           <Icon name="closecircleo" size={70} />
         </View>
       </View>
-      <View style={styles.secondSection}>
+      <Animated.View style={[styles.secondSection, {opacity: fadeAnim}]}>
         <Text style={styles.secondSectiontxt}>App Board</Text>
-        <View>
+        <View style={{marginTop: height / 14}}>
           <View>
             <Box marginLeft={10} marginBottom={5}>
               <Text>Quick Registration</Text>
             </Box>
             <Box alignItems="center">
-              <Input placeholder="Input" w="80%" />
+              <Input placeholder="Type Your Email" w="80%" />
             </Box>
           </View>
           <View style={styles.btnContainer}>
+            <Text>OR</Text>
             <TouchableOpacity onPress={onPressHandler} style={styles.button}>
               <Text style={styles.buttonText}>Register</Text>
             </TouchableOpacity>
           </View>
         </View>
-      </View>
+      </Animated.View>
     </KeyboardAwareScrollView>
   );
 };
@@ -93,6 +105,7 @@ const styles = StyleSheet.create({
     borderRadius: 25,
     justifyContent: 'center',
     alignItems: 'center',
+    marginTop: height / 26,
   },
   buttonText: {
     color: 'white',
