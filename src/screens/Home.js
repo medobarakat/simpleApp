@@ -1,62 +1,77 @@
-import {Box, Input} from 'native-base';
-import React, {useRef, useEffect} from 'react';
-import {
-  StyleSheet,
-  Text,
-  View,
-  Dimensions,
-  TouchableOpacity,
-  Animated,
-} from 'react-native';
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import { Box, Input } from 'native-base';
+import React from 'react';
+import { StyleSheet, Text, View, Dimensions, TouchableOpacity } from 'react-native';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import Icon from 'react-native-vector-icons/AntDesign';
+import { Formik } from 'formik';
+import * as Yup from 'yup';
 
 const height = Dimensions.get('window').height;
 const width = Dimensions.get('window').width;
 
-const Home = ({navigation}) => {
-  const fadeAnim = useRef(new Animated.Value(0)).current;
+const validationSchema = Yup.object().shape({
+  email: Yup.string().email('Invalid email').required('Email is required'),
+});
 
-  useEffect(() => {
-    Animated.timing(fadeAnim, {
-      toValue: 1,
-      duration: 1000,
-      useNativeDriver: true,
-    }).start();
-  }, [fadeAnim]);
-
+const Home = ({ navigation }) => {
   const onPressHandler = () => {
     navigation.navigate('Signup');
   };
 
+  const handleFormSubmit = (values) => {
+    // Handle form submission here
+    console.log(values);
+  };
+
   return (
-    <KeyboardAwareScrollView
-      contentContainerStyle={styles.container}
-      extraScrollHeight={-100}>
+    <KeyboardAwareScrollView contentContainerStyle={styles.container} extraScrollHeight={-100}>
       <View style={styles.firstSection}>
         <View style={styles.iconWrapper}>
           <Icon name="closecircleo" size={70} />
         </View>
       </View>
-      <Animated.View style={[styles.secondSection, {opacity: fadeAnim}]}>
+      <View style={styles.secondSection}>
         <Text style={styles.secondSectiontxt}>App Board</Text>
-        <View style={{marginTop: height / 14}}>
+        <View style={{ marginTop: height / 30, alignItems: 'center' }}>
           <View>
             <Box marginLeft={10} marginBottom={5}>
               <Text>Quick Registration</Text>
             </Box>
-            <Box alignItems="center">
-              <Input placeholder="Type Your Email" w="80%" />
-            </Box>
+            <Formik
+              initialValues={{ email: '' }}
+              validationSchema={validationSchema}
+              onSubmit={handleFormSubmit}
+            >
+              {({ handleChange, handleBlur, handleSubmit, values, touched, errors }) => (
+                <>
+                  <Box alignItems="center">
+                    <Input
+                      height={50}
+                      placeholder="Type Your Email"
+                      w="150%"
+                      onChangeText={handleChange('email')}
+                      onBlur={handleBlur('email')}
+                      value={values.email}
+                    />
+                    {touched.email && errors.email && (
+                      <Text style={styles.errorText}>{errors.email}</Text>
+                    )}
+                  </Box>
+                  <TouchableOpacity onPress={handleSubmit} style={styles.button}>
+                    <Text style={styles.buttonText}>Quick Register</Text>
+                  </TouchableOpacity>
+                </>
+              )}
+            </Formik>
           </View>
           <View style={styles.btnContainer}>
             <Text>OR</Text>
             <TouchableOpacity onPress={onPressHandler} style={styles.button}>
-              <Text style={styles.buttonText}>Register</Text>
+              <Text style={styles.buttonText}>Sign Up</Text>
             </TouchableOpacity>
           </View>
         </View>
-      </Animated.View>
+      </View>
     </KeyboardAwareScrollView>
   );
 };
@@ -85,6 +100,7 @@ const styles = StyleSheet.create({
   },
   secondSection: {
     marginTop: height / 12,
+    alignItems: 'center',
   },
   secondSectiontxt: {
     textAlign: 'center',
@@ -110,5 +126,9 @@ const styles = StyleSheet.create({
   buttonText: {
     color: 'white',
     fontSize: 16,
+  },
+  errorText: {
+    color: 'red',
+    marginTop: 5,
   },
 });

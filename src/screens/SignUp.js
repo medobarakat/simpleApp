@@ -41,6 +41,7 @@ const Signup = ({navigation}) => {
           <>
             <View style={styles.inputContainer}>
               <TextInput
+              
                 style={styles.input}
                 placeholder="Business Name"
                 onChangeText={handleChange('name')}
@@ -114,13 +115,13 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   input: {
-    height: 40,
+    height: 60,
     borderColor: 'gray',
     borderWidth: 1,
     marginBottom: 10,
     paddingHorizontal: 10,
     width: width - 60,
-    marginVertical:10,
+    marginVertical:20,
     borderRadius: 10,
   },
   button: {
