@@ -7,24 +7,30 @@ import {
   TouchableOpacity,
   TextInput,
 } from 'react-native';
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import Icon from 'react-native-vector-icons/AntDesign';
-import {Formik} from 'formik';
+import { Formik } from 'formik';
+import * as Yup from 'yup';
 
 const height = Dimensions.get('window').height;
 const width = Dimensions.get('window').width;
 
-const Signup = ({navigation}) => {
+const validationSchema = Yup.object().shape({
+  name: Yup.string().required('Business Name is required'),
+  serviceName: Yup.string().required('Services Name is required'),
+  address: Yup.string().required('Address is required'),
+  email: Yup.string().email('Invalid email').required('Email is required'),
+  phone: Yup.string().required('Phone is required'),
+});
+
+const Signup = ({ navigation }) => {
   const goBack = () => {
     navigation.goBack();
   };
 
-  const validateForm = values => {
-    // Validation logic here
-  };
-
-  const handleSubmit = values => {
+  const handleSubmit = (values) => {
     // Form submission logic here
+    console.log(values);
   };
 
   return (
@@ -34,34 +40,52 @@ const Signup = ({navigation}) => {
       </TouchableOpacity>
       <Text style={styles.title}>Sign Up</Text>
       <Formik
-        initialValues={{name: '', email: '', password: '', confirmPassword: ''}}
-        validate={validateForm}
-        onSubmit={handleSubmit}>
-        {({handleChange, handleBlur, handleSubmit, values}) => (
+        initialValues={{
+          name: '',
+          serviceName: '',
+          address: '',
+          email: '',
+          phone: '',
+        }}
+        validationSchema={validationSchema}
+        onSubmit={handleSubmit}
+      >
+        {({ handleChange, handleBlur, handleSubmit, values, touched, errors }) => (
           <>
             <View style={styles.inputContainer}>
               <TextInput
-              
                 style={styles.input}
                 placeholder="Business Name"
                 onChangeText={handleChange('name')}
                 onBlur={handleBlur('name')}
                 value={values.name}
               />
-                  <TextInput
+              {touched.name && errors.name && (
+                <Text style={styles.errorText}>{errors.name}</Text>
+              )}
+
+              <TextInput
                 style={styles.input}
                 placeholder="Services Name"
-                onChangeText={handleChange('name')}
-                onBlur={handleBlur('name')}
-                value={values.name}
+                onChangeText={handleChange('serviceName')}
+                onBlur={handleBlur('serviceName')}
+                value={values.serviceName}
               />
-                 <TextInput
+              {touched.serviceName && errors.serviceName && (
+                <Text style={styles.errorText}>{errors.serviceName}</Text>
+              )}
+
+              <TextInput
                 style={styles.input}
-                placeholder="Adress"
-                onChangeText={handleChange('name')}
-                onBlur={handleBlur('name')}
-                value={values.name}
+                placeholder="Address"
+                onChangeText={handleChange('address')}
+                onBlur={handleBlur('address')}
+                value={values.address}
               />
+              {touched.address && errors.address && (
+                <Text style={styles.errorText}>{errors.address}</Text>
+              )}
+
               <TextInput
                 style={styles.input}
                 placeholder="Email"
@@ -70,15 +94,22 @@ const Signup = ({navigation}) => {
                 value={values.email}
                 keyboardType="email-address"
               />
-                 <TextInput
+              {touched.email && errors.email && (
+                <Text style={styles.errorText}>{errors.email}</Text>
+              )}
+
+              <TextInput
                 style={styles.input}
                 placeholder="Phone"
-                onChangeText={handleChange('name')}
-                onBlur={handleBlur('name')}
-                value={values.name}
+                onChangeText={handleChange('phone')}
+                onBlur={handleBlur('phone')}
+                value={values.phone}
               />
-          
+              {touched.phone && errors.phone && (
+                <Text style={styles.errorText}>{errors.phone}</Text>
+              )}
             </View>
+
             <TouchableOpacity onPress={handleSubmit} style={styles.button}>
               <Text style={styles.buttonText}>Sign Up</Text>
             </TouchableOpacity>
@@ -115,13 +146,13 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   input: {
-    height: 60,
+    height: 50,
     borderColor: 'gray',
     borderWidth: 1,
     marginBottom: 10,
     paddingHorizontal: 10,
     width: width - 60,
-    marginVertical:20,
+    marginVertical: 20,
     borderRadius: 10,
   },
   button: {
@@ -131,11 +162,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 5,
-    borderRadius:40
   },
   buttonText: {
     color: 'white',
     fontSize: 18,
     fontWeight: 'bold',
+  },
+  errorText: {
+    color: 'red',
+    marginTop: 5,
   },
 });

@@ -46,6 +46,7 @@ const Home = ({ navigation }) => {
                 <>
                   <Box alignItems="center">
                     <Input
+                    borderRadius={10}
                       height={50}
                       placeholder="Type Your Email"
                       w="150%"
@@ -85,7 +86,7 @@ const styles = StyleSheet.create({
   },
   firstSection: {
     backgroundColor: '#111b31',
-    height: 300,
+    height: 250,
     borderBottomRightRadius: 130,
     borderBottomLeftRadius: 130,
     borderColor: '#111b31',
