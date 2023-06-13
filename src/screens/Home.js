@@ -1,5 +1,5 @@
-import { Box, Input } from 'native-base';
-import React from 'react';
+import React , {useState,useRef} from 'react';
+import { Box, Input, Modal } from 'native-base';
 import { StyleSheet, Text, View, Dimensions, TouchableOpacity } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import Icon from 'react-native-vector-icons/AntDesign';
@@ -14,6 +14,9 @@ const validationSchema = Yup.object().shape({
 });
 
 const Home = ({ navigation }) => {
+  const [modalVisible, setModalVisible] = useState(false);
+  const initialRef = useRef(null);
+  const finalRef = useRef(null);
   const onPressHandler = () => {
     navigation.navigate('Signup');
   };
@@ -21,10 +24,22 @@ const Home = ({ navigation }) => {
   const handleFormSubmit = (values) => {
     // Handle form submission here
     console.log(values);
+    setModalVisible(true)
   };
 
   return (
     <KeyboardAwareScrollView contentContainerStyle={styles.container} extraScrollHeight={-100}>
+      {/* start of the modal */}
+      <Modal isOpen={modalVisible} onClose={() => setModalVisible(false)} initialFocusRef={initialRef} finalFocusRef={finalRef}>
+        <Modal.Content>
+          <Modal.CloseButton />
+          <Modal.Header>Quick Registration SucessFully</Modal.Header>
+          <Modal.Body>
+          <Text>Quick Registration Done Successfully</Text>
+          </Modal.Body>
+        </Modal.Content>
+      </Modal>
+      {/* end of the modal */}
       <View style={styles.firstSection}>
         <View style={styles.iconWrapper}>
           <Icon name="closecircleo" size={70} />
