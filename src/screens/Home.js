@@ -1,45 +1,29 @@
-import React , {useState,useRef} from 'react';
-import { Box, Input, Modal } from 'native-base';
-import { StyleSheet, Text, View, Dimensions, TouchableOpacity } from 'react-native';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import React, {useState, useRef} from 'react';
+import {
+  StyleSheet,
+  Text,
+  View,
+  Dimensions,
+  TouchableOpacity,
+} from 'react-native';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import Icon from 'react-native-vector-icons/AntDesign';
-import { Formik } from 'formik';
-import * as Yup from 'yup';
 
 const height = Dimensions.get('window').height;
 const width = Dimensions.get('window').width;
 
-const validationSchema = Yup.object().shape({
-  email: Yup.string().email('Invalid email').required('Email is required'),
-});
-
-const Home = ({ navigation }) => {
-  const [modalVisible, setModalVisible] = useState(false);
-  const initialRef = useRef(null);
-  const finalRef = useRef(null);
-  const onPressHandler = () => {
+const Home = ({navigation}) => {
+  const onPressEmailHandler = () => {
+    navigation.navigate('quick');
+  };
+  const onPressSignUpHandler = () => {
     navigation.navigate('Signup');
   };
 
-  const handleFormSubmit = (values) => {
-    // Handle form submission here
-    console.log(values);
-    setModalVisible(true)
-  };
-
   return (
-    <KeyboardAwareScrollView contentContainerStyle={styles.container} extraScrollHeight={-100}>
-      {/* start of the modal */}
-      <Modal isOpen={modalVisible} onClose={() => setModalVisible(false)} initialFocusRef={initialRef} finalFocusRef={finalRef}>
-        <Modal.Content>
-          <Modal.CloseButton />
-          <Modal.Header>Quick Registration SucessFully</Modal.Header>
-          <Modal.Body>
-          <Text>Quick Registration Done Successfully</Text>
-          </Modal.Body>
-        </Modal.Content>
-      </Modal>
-      {/* end of the modal */}
+    <KeyboardAwareScrollView
+      contentContainerStyle={styles.container}
+      extraScrollHeight={-100}>
       <View style={styles.firstSection}>
         <View style={styles.iconWrapper}>
           <Icon name="closecircleo" size={70} />
@@ -47,42 +31,13 @@ const Home = ({ navigation }) => {
       </View>
       <View style={styles.secondSection}>
         <Text style={styles.secondSectiontxt}>App Board</Text>
-        <View style={{ marginTop: height / 30, alignItems: 'center' }}>
-          <View>
-            <Box marginLeft={10} marginBottom={5}>
-              <Text>Quick Registration</Text>
-            </Box>
-            <Formik
-              initialValues={{ email: '' }}
-              validationSchema={validationSchema}
-              onSubmit={handleFormSubmit}
-            >
-              {({ handleChange, handleBlur, handleSubmit, values, touched, errors }) => (
-                <>
-                  <Box alignItems="center">
-                    <Input
-                    borderRadius={10}
-                      height={50}
-                      placeholder="Type Your Email"
-                      w="150%"
-                      onChangeText={handleChange('email')}
-                      onBlur={handleBlur('email')}
-                      value={values.email}
-                    />
-                    {touched.email && errors.email && (
-                      <Text style={styles.errorText}>{errors.email}</Text>
-                    )}
-                  </Box>
-                  <TouchableOpacity onPress={handleSubmit} style={styles.button}>
-                    <Text style={styles.buttonText}>Quick Register</Text>
-                  </TouchableOpacity>
-                </>
-              )}
-            </Formik>
-          </View>
+        <View style={{marginTop: height / 30, alignItems: 'center'}}>
+          <TouchableOpacity onPress={onPressEmailHandler} style={styles.button}>
+            <Text style={styles.buttonText}>Email</Text>
+          </TouchableOpacity>
           <View style={styles.btnContainer}>
             <Text>OR</Text>
-            <TouchableOpacity onPress={onPressHandler} style={styles.button}>
+            <TouchableOpacity onPress={onPressSignUpHandler} style={styles.button}>
               <Text style={styles.buttonText}>Sign Up</Text>
             </TouchableOpacity>
           </View>
@@ -121,7 +76,7 @@ const styles = StyleSheet.create({
   secondSectiontxt: {
     textAlign: 'center',
     marginBottom: height / 40,
-    fontSize: 24,
+    fontSize: 28,
   },
   btnContainer: {
     marginTop: height / 19,
