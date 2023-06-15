@@ -26,7 +26,7 @@ const LoginNavigation = () => {
       />
       <Stack.Screen name="quick" component={Quick}
        options={{
-        title:"Quick Registration",
+        title:"Email Register",
         headerTransparent:true,
         headerTitleAlign: 'center',
       }} />

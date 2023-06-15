@@ -33,13 +33,22 @@ const Home = ({navigation}) => {
         <Text style={styles.secondSectiontxt}>App Board</Text>
         <View style={{marginTop: height / 30, alignItems: 'center'}}>
           <TouchableOpacity onPress={onPressEmailHandler} style={styles.button}>
-            <Text style={styles.buttonText}>Email</Text>
+            <Text style={styles.buttonText}>Email Registration</Text>
           </TouchableOpacity>
           <View style={styles.btnContainer}>
-            <Text>OR</Text>
             <TouchableOpacity onPress={onPressSignUpHandler} style={styles.button}>
-              <Text style={styles.buttonText}>Register</Text>
+              <Text style={styles.buttonText}>Full Registration</Text>
             </TouchableOpacity>
+          </View>
+          <View style={styles.btnContainer}>
+            <TouchableOpacity onPress={onPressSignUpHandler} style={styles.button}>
+              <Text style={styles.buttonText}>Business Registration</Text>
+            </TouchableOpacity>
+            <View style={styles.btnContainer}>
+            <TouchableOpacity onPress={onPressSignUpHandler} style={styles.button2}>
+              <Text style={styles.buttonText}>Account Login</Text>
+            </TouchableOpacity>
+          </View>
           </View>
         </View>
       </View>
@@ -79,7 +88,7 @@ const styles = StyleSheet.create({
     fontSize: 28,
   },
   btnContainer: {
-    marginTop: height / 19,
+    // marginTop: height / 19,
     width: width / 2,
     justifyContent: 'center',
     alignItems: 'center',
@@ -87,6 +96,15 @@ const styles = StyleSheet.create({
   },
   button: {
     backgroundColor: '#111b31',
+    width: 200,
+    height: 50,
+    borderRadius: 25,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: height / 26,
+  },
+  button2:{
+    backgroundColor:"#0e7490",
     width: 200,
     height: 50,
     borderRadius: 25,

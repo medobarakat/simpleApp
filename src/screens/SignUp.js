@@ -20,13 +20,13 @@ const width = Dimensions.get('window').width;
 const validationSchema = Yup.object().shape({
   name: Yup.string().required('Business Name is required'),
   serviceName: Yup.string().required('Services Name is required'),
-  city: Yup.string().required('city is required'),
-  state: Yup.string().required('state is required'),
+  city: Yup.string().required('City is required'),
+  state: Yup.string().required('State is required'),
   zipCode: Yup.string().required('Zip Code is required'),
   email: Yup.string().email('Invalid email').required('Email is required'),
   phone: Yup.string().required('Phone is required'),
-  address1: Yup.string().required('address is required'),
-  // address2: Yup.string().required('the rest of the address is required')
+  address1: Yup.string().required('Address is required'),
+  address2: Yup.string().required('Address 2 is required')
 });
 
 const Signup = ({navigation}) => {
@@ -155,7 +155,7 @@ const Signup = ({navigation}) => {
               {touched.serviceName && errors.serviceName && (
                 <Text style={styles.errorText}>{errors.serviceName}</Text>
               )}
-                <Text style={styles.span}>address</Text>
+                <Text style={styles.span}>Address 1</Text>
               <Animated.View
                 style={[
                   styles.inputWrapper,
@@ -172,13 +172,17 @@ const Signup = ({navigation}) => {
                 ]}>
                 <TextInput
                   style={styles.input}
-                  placeholder="Adress1"
+                  placeholder="Adress 1"
                   onChangeText={handleChange('address1')}
                   onBlur={handleBlur('address1')}
                   value={values.address1}
                 />
               </Animated.View>
-              
+              {touched.address1 && errors.address1 && (
+                <Text style={styles.errorText}>{errors.address1}</Text>
+              )}
+              <Text style={styles.span}>Address 2</Text>
+
               <Animated.View
                 style={[
                   styles.inputWrapper,
@@ -201,9 +205,7 @@ const Signup = ({navigation}) => {
                   value={values.address2}
                 />
               </Animated.View>
-              {touched.address1 && errors.address1 && (
-                <Text style={styles.errorText}>{errors.address1}</Text>
-              )}
+           
               {touched.address2 && errors.address2 && (
                 <Text style={styles.errorText}>{errors.address2}</Text>
               )}
@@ -233,7 +235,7 @@ const Signup = ({navigation}) => {
               {touched.city && errors.city && (
                 <Text style={styles.errorText}>{errors.city}</Text>
               )}
-                <Text style={styles.span}>State Name</Text>
+                <Text style={styles.span}>State</Text>
               <Animated.View
                 style={[
                   styles.inputWrapper,
@@ -256,8 +258,8 @@ const Signup = ({navigation}) => {
                   value={values.state}
                 />
               </Animated.View>
-              {touched.city && errors.city && (
-                <Text style={styles.errorText}>{errors.city}</Text>
+              {touched.state && errors.state && (
+                <Text style={styles.errorText}>{errors.state}</Text>
               )}
                 <Text style={styles.span}>Zip Code</Text>
               <Animated.View
@@ -282,10 +284,10 @@ const Signup = ({navigation}) => {
                   value={values.zipCode}
                 />
               </Animated.View>
-              {touched.city && errors.city && (
-                <Text style={styles.errorText}>{errors.city}</Text>
+              {touched.zipCode && errors.zipCode && (
+                <Text style={styles.errorText}>{errors.zipCode}</Text>
               )}
-              <Text style={styles.span}>Your Email</Text>
+              <Text style={styles.span}>Email</Text>
 
               <Animated.View
                 style={[
@@ -313,7 +315,7 @@ const Signup = ({navigation}) => {
               {touched.email && errors.email && (
                 <Text style={styles.errorText}>{errors.email}</Text>
               )}
-              <Text style={styles.span}>Phone Number</Text>
+              <Text style={styles.span}>Phone</Text>
 
               <Animated.View
                 style={[

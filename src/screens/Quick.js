@@ -53,7 +53,7 @@ const Quick = () => {
             <Text style={styles.titleText}>App Board</Text>
           </View>
 
-          <Text style={styles.DescText}>Quick Registration With Email</Text>
+          {/* <Text style={styles.DescText}>Quick Registration With Email</Text> */}
         </Box>
         <Formik
           initialValues={{email: ''}}
@@ -69,11 +69,11 @@ const Quick = () => {
           }) => (
             <>
               <Box>
-                <Text style={styles.span}>Type Your Email</Text>
+                <Text style={styles.span}>Email</Text>
                 <Input
                   borderRadius={20}
                   height={50}
-                  placeholder="Type Your Email"
+                  placeholder="Email"
                   w="80%"
                   onChangeText={handleChange('email')}
                   onBlur={handleBlur('email')}
@@ -85,7 +85,7 @@ const Quick = () => {
                 )}
               </Box>
               <TouchableOpacity onPress={handleSubmit} style={styles.button}>
-                <Text style={styles.buttonText}>Quick Register</Text>
+                <Text style={styles.buttonText}>Register</Text>
               </TouchableOpacity>
             </>
           )}
