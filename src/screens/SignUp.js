@@ -58,7 +58,8 @@ const Signup = ({navigation}) => {
           <Icon name="closecircleo" size={35} />
           <Text style={styles.titleText}>App Board</Text>
         </View>
-        <Text style={styles.DescText}>Quick Registration With Email</Text>
+        {/* any description will be here */}
+        {/* <Text style={styles.DescText}>Quick Registration With Email</Text> */}
       </Box>
       <Formik
         initialValues={{
@@ -84,7 +85,7 @@ const Signup = ({navigation}) => {
         }) => (
           <>
             <View style={styles.inputContainer}>
-              <Text style={styles.span}>Your Business Name</Text>
+              <Text style={styles.span}>Business Name</Text>
 
               <Animated.View
                 style={[
@@ -111,7 +112,7 @@ const Signup = ({navigation}) => {
               {touched.name && errors.name && (
                 <Text style={styles.errorText}>{errors.name}</Text>
               )}
-              <Text style={styles.span}>Choose Your Services</Text>
+              <Text style={styles.span}>Services</Text>
 
               <Animated.View
                 style={[
@@ -154,7 +155,7 @@ const Signup = ({navigation}) => {
               {touched.serviceName && errors.serviceName && (
                 <Text style={styles.errorText}>{errors.serviceName}</Text>
               )}
-                <Text style={styles.span}>Type Your address</Text>
+                <Text style={styles.span}>address</Text>
               <Animated.View
                 style={[
                   styles.inputWrapper,
@@ -206,7 +207,7 @@ const Signup = ({navigation}) => {
               {touched.address2 && errors.address2 && (
                 <Text style={styles.errorText}>{errors.address2}</Text>
               )}
-              <Text style={styles.span}>Type Your City Name</Text>
+              <Text style={styles.span}>City</Text>
               <Animated.View
                 style={[
                   styles.inputWrapper,
@@ -232,7 +233,7 @@ const Signup = ({navigation}) => {
               {touched.city && errors.city && (
                 <Text style={styles.errorText}>{errors.city}</Text>
               )}
-                <Text style={styles.span}>Type Your State</Text>
+                <Text style={styles.span}>State Name</Text>
               <Animated.View
                 style={[
                   styles.inputWrapper,
@@ -258,7 +259,7 @@ const Signup = ({navigation}) => {
               {touched.city && errors.city && (
                 <Text style={styles.errorText}>{errors.city}</Text>
               )}
-                <Text style={styles.span}>Type Your Zip Code</Text>
+                <Text style={styles.span}>Zip Code</Text>
               <Animated.View
                 style={[
                   styles.inputWrapper,
@@ -284,7 +285,7 @@ const Signup = ({navigation}) => {
               {touched.city && errors.city && (
                 <Text style={styles.errorText}>{errors.city}</Text>
               )}
-              <Text style={styles.span}>Type Your Email</Text>
+              <Text style={styles.span}>Your Email</Text>
 
               <Animated.View
                 style={[
@@ -312,7 +313,7 @@ const Signup = ({navigation}) => {
               {touched.email && errors.email && (
                 <Text style={styles.errorText}>{errors.email}</Text>
               )}
-              <Text style={styles.span}>Type Your Phone</Text>
+              <Text style={styles.span}>Phone Number</Text>
 
               <Animated.View
                 style={[
@@ -342,7 +343,7 @@ const Signup = ({navigation}) => {
             </View>
 
             <TouchableOpacity onPress={handleSubmit} style={styles.button}>
-              <Text style={styles.buttonText}>Sign Up</Text>
+              <Text style={styles.buttonText}>Register</Text>
             </TouchableOpacity>
           </>
         )}
@@ -403,6 +404,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 35,
+    marginBottom:16
   },
   buttonText: {
     color: 'white',

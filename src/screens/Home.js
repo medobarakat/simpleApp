@@ -38,7 +38,7 @@ const Home = ({navigation}) => {
           <View style={styles.btnContainer}>
             <Text>OR</Text>
             <TouchableOpacity onPress={onPressSignUpHandler} style={styles.button}>
-              <Text style={styles.buttonText}>Sign Up</Text>
+              <Text style={styles.buttonText}>Register</Text>
             </TouchableOpacity>
           </View>
         </View>
