@@ -6,6 +6,7 @@ import Signup from '../screens/Auth/SignUp';
 import BusinessSignUp from '../screens/Auth/BusinessSignUp';
 import Quick from '../screens/Auth/Quick';
 import Login from '../screens/Auth/Login';
+import BusinessSignUpNavigation from './BusinessSignUpNavigation';
 
 
 const Stack = createNativeStackNavigator();
@@ -27,11 +28,9 @@ const LoginNavigation = () => {
         headerTitleAlign: 'center',
       }}
       />
-      <Stack.Screen name="BusinessSignup" component={BusinessSignUp} 
+      <Stack.Screen name="BusinessSignup" component={BusinessSignUpNavigation} 
        options={{
-        title:"Business Registration",
-        headerTransparent:false,
-        headerTitleAlign: 'center',
+        headerShown:false
       }}
       />
       <Stack.Screen name="quick" component={Quick}
