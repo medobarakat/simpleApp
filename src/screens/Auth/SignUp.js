@@ -13,16 +13,21 @@ import Icon from 'react-native-vector-icons/AntDesign';
 import {Formik} from 'formik';
 import * as Yup from 'yup';
 import {Box, Select, CheckIcon} from 'native-base';
+import CountryPicker from 'react-native-country-picker-modal';
 
 const height = Dimensions.get('window').height;
 const width = Dimensions.get('window').width;
 
 const validationSchema = Yup.object().shape({
-  name: Yup.string().required('Business Name is required'),
+  firstName: Yup.string().required('First Name is required'),
+  LastName: Yup.string().required('Last Name is required'),
   serviceName: Yup.string().required('Services Name is required'),
   city: Yup.string().required('City is required'),
   state: Yup.string().required('State is required'),
-  zipCode: Yup.string().required('Zip Code is required'),
+  zipCode: Yup.string()
+    .required('Zip Code is required')
+    .min(5, 'you have entered wrong zip code')
+    .max(5, 'you have entered wrong zip code'),
   email: Yup.string().email('Invalid email').required('Email is required'),
   phone: Yup.string().required('Phone is required'),
   address1: Yup.string().required('Address is required'),
@@ -30,9 +35,17 @@ const validationSchema = Yup.object().shape({
 });
 
 const Signup = ({navigation}) => {
-  const goBack = () => {
-    navigation.goBack();
+  const [country, setCountry] = useState('');
+  const [countryError, setCountryError] = useState(false);
+
+  const onSelect = country => {
+    setCountry(country);
+    setCountryError(false);
   };
+  // return (
+  // const goBack = () => {
+  //   navigation.goBack();
+  // };
 
   const slideAnim = useRef(new Animated.Value(0)).current;
 
@@ -46,8 +59,17 @@ const Signup = ({navigation}) => {
 
   const handleSubmit = values => {
     // Form submission logic here
-    console.log(values);
+    if (country === '') {
+      setCountryError(true);
+      console.log('yes');
+    } else {
+      console.log('no');
+      console.log(values);
+      console.warn(country);
+    }
   };
+
+ 
 
   const [selectedService, setSelectedService] = useState('');
 
@@ -63,7 +85,8 @@ const Signup = ({navigation}) => {
       </Box>
       <Formik
         initialValues={{
-          name: '',
+          firstName: '',
+          LastName: '',
           serviceName: '',
           city: '',
           state: '',
@@ -85,8 +108,19 @@ const Signup = ({navigation}) => {
         }) => (
           <>
             <View style={styles.inputContainer}>
-              <Text style={styles.span}>Business Name</Text>
+              <Animated.View
+                style={[
+                  styles.inputWrapper2,
+                  
+                ]}>
+                <CountryPicker onSelect={e => onSelect(e.name)} />
+                <Text style={styles.span}>{country}</Text>
+              </Animated.View>
 
+              {countryError && (
+                <Text style={styles.errorText}>Select A Country Please</Text>
+              )}
+              <Text style={styles.span}>First Name</Text>
               <Animated.View
                 style={[
                   styles.inputWrapper,
@@ -103,15 +137,42 @@ const Signup = ({navigation}) => {
                 ]}>
                 <TextInput
                   style={styles.input}
-                  placeholder="Business Name"
-                  onChangeText={handleChange('name')}
-                  onBlur={handleBlur('name')}
-                  value={values.name}
+                  placeholder="First Name"
+                  onChangeText={handleChange('firstName')}
+                  onBlur={handleBlur('firstName')}
+                  value={values.firstName}
                 />
               </Animated.View>
-              {touched.name && errors.name && (
-                <Text style={styles.errorText}>{errors.name}</Text>
+              {touched.firstName && errors.firstName && (
+                <Text style={styles.errorText}>{errors.firstName}</Text>
               )}
+              <Text style={styles.span}>Last Name</Text>
+              <Animated.View
+                style={[
+                  styles.inputWrapper,
+                  {
+                    transform: [
+                      {
+                        translateY: slideAnim.interpolate({
+                          inputRange: [0, 1],
+                          outputRange: [200, 0],
+                        }),
+                      },
+                    ],
+                  },
+                ]}>
+                <TextInput
+                  style={styles.input}
+                  placeholder="Last Name"
+                  onChangeText={handleChange('LastName')}
+                  onBlur={handleBlur('LastName')}
+                  value={values.LastName}
+                />
+              </Animated.View>
+              {touched.LastName && errors.LastName && (
+                <Text style={styles.errorText}>{errors.LastName}</Text>
+              )}
+
               <Text style={styles.span}>Services</Text>
 
               <Animated.View
@@ -277,6 +338,7 @@ const Signup = ({navigation}) => {
                   },
                 ]}>
                 <TextInput
+                  keyboardType="numeric"
                   style={styles.input}
                   placeholder="Zip Code"
                   onChangeText={handleChange('zipCode')}
@@ -337,6 +399,7 @@ const Signup = ({navigation}) => {
                   onChangeText={handleChange('phone')}
                   onBlur={handleBlur('phone')}
                   value={values.phone}
+                  keyboardType='number-pad'
                 />
               </Animated.View>
               {touched.phone && errors.phone && (
@@ -387,6 +450,12 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     backgroundColor: 'white',
     elevation: 3,
+  },
+  inputWrapper2: {
+    marginBottom: 10,
+    width: width - 60,
+    borderRadius: 10,
+    backgroundColor: 'white',
   },
   SelectWrapper: {
     marginBottom: 10,
