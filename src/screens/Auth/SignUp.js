@@ -7,13 +7,16 @@ import {
   TouchableOpacity,
   TextInput,
   Animated,
+  ActivityIndicator,
 } from 'react-native';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import Icon from 'react-native-vector-icons/AntDesign';
 import {Formik} from 'formik';
 import * as Yup from 'yup';
-import {Box, Select, CheckIcon} from 'native-base';
+import {Box, Select, CheckIcon, Modal} from 'native-base';
 import CountryPicker from 'react-native-country-picker-modal';
+import {Base_Url, Register_Api} from '../../constants/Apis';
+import axios from 'axios';
 
 const height = Dimensions.get('window').height;
 const width = Dimensions.get('window').width;
@@ -21,7 +24,6 @@ const width = Dimensions.get('window').width;
 const validationSchema = Yup.object().shape({
   firstName: Yup.string().required('First Name is required'),
   LastName: Yup.string().required('Last Name is required'),
-  serviceName: Yup.string().required('Services Name is required'),
   city: Yup.string().required('City is required'),
   state: Yup.string().required('State is required'),
   zipCode: Yup.string()
@@ -37,7 +39,11 @@ const validationSchema = Yup.object().shape({
 const Signup = ({navigation}) => {
   const [country, setCountry] = useState('');
   const [countryError, setCountryError] = useState(false);
-
+  const [loading, setLoading] = useState(false);
+  const [modalVisible, setModalVisible] = useState(false);
+  const [requestError, setRequestError] = useState("");
+  const initialRef = useRef(null);
+  const finalRef = useRef(null);
   const onSelect = country => {
     setCountry(country);
     setCountryError(false);
@@ -57,24 +63,78 @@ const Signup = ({navigation}) => {
     }).start();
   }, [slideAnim]);
 
-  const handleSubmit = values => {
+  const handleSubmitFormik = values => {
     // Form submission logic here
     if (country === '') {
       setCountryError(true);
-      console.log('yes');
+      console.log('no country');
     } else {
-      console.log('no');
-      console.log(values);
-      console.warn(country);
+      //  all validations passed
+      // console.log(values);
+       handleFormSubmitApi(values);
     }
   };
 
- 
+  const handleFormSubmitApi = values => {
+    setLoading(true);
+    setRequestError(false)
+    // console.log(values)
+    // console.log(body)
+    const url = Base_Url + Register_Api;
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    };
+    const body = {
+      email: values.email,
+      firstName: values.firstName,
+      lastName: values.LastName,
+      address1: values.address1,
+      address2: values.address2,
+      city: values.city,
+      state: values.state,
+      zipCode: values.zipCode,
+      country: country,
+      phoneNo: values.phone,
+      registrationType: 'FULL_REGISTRATION',
+    };
+    axios
+      .post(url, body, config)
+      .then(res => {
+        // console.log(res);
+        setLoading(false);
+        console.log(res.data.message)
+          setModalVisible(true);
+      
+      })
+      .catch(err => {
+        setLoading(false);
+        setRequestError(err.response.data[0].message);
+        setError(true);
+        setRequestError("Please Check Your Information It Might Be Exist")
+      });
+  };
 
-  const [selectedService, setSelectedService] = useState('');
+  // const [selectedService, setSelectedService] = useState('');
 
   return (
     <KeyboardAwareScrollView contentContainerStyle={styles.container}>
+      {/* start of the modal */}
+      <Modal
+        isOpen={modalVisible}
+        onClose={() => setModalVisible(false)}
+        initialFocusRef={initialRef}
+        finalFocusRef={finalRef}>
+        <Modal.Content>
+          <Modal.CloseButton />
+          <Modal.Header>Quick Registration Successfully</Modal.Header>
+          <Modal.Body>
+            <Text>Quick Registration Done Successfully</Text>
+          </Modal.Body>
+        </Modal.Content>
+      </Modal>
+      {/* end of the modal */}
       <Box>
         <View style={styles.titleWrapper}>
           <Icon name="closecircleo" size={35} />
@@ -87,7 +147,6 @@ const Signup = ({navigation}) => {
         initialValues={{
           firstName: '',
           LastName: '',
-          serviceName: '',
           city: '',
           state: '',
           zipCode: '',
@@ -97,7 +156,7 @@ const Signup = ({navigation}) => {
           address2: '',
         }}
         validationSchema={validationSchema}
-        onSubmit={handleSubmit}>
+        onSubmit={handleSubmitFormik}>
         {({
           handleChange,
           handleBlur,
@@ -108,11 +167,7 @@ const Signup = ({navigation}) => {
         }) => (
           <>
             <View style={styles.inputContainer}>
-              <Animated.View
-                style={[
-                  styles.inputWrapper2,
-                  
-                ]}>
+              <Animated.View style={[styles.inputWrapper2]}>
                 <CountryPicker onSelect={e => onSelect(e.name)} />
                 <Text style={styles.span}>{country}</Text>
               </Animated.View>
@@ -173,7 +228,7 @@ const Signup = ({navigation}) => {
                 <Text style={styles.errorText}>{errors.LastName}</Text>
               )}
 
-              <Text style={styles.span}>Services</Text>
+              {/* <Text style={styles.span}>Services</Text>
 
               <Animated.View
                 style={[
@@ -215,7 +270,7 @@ const Signup = ({navigation}) => {
               </Animated.View>
               {touched.serviceName && errors.serviceName && (
                 <Text style={styles.errorText}>{errors.serviceName}</Text>
-              )}
+              )} */}
               <Text style={styles.span}>Address 1</Text>
               <Animated.View
                 style={[
@@ -313,7 +368,7 @@ const Signup = ({navigation}) => {
                 ]}>
                 <TextInput
                   style={styles.input}
-                  placeholder="Zip Code"
+                  placeholder="State"
                   onChangeText={handleChange('state')}
                   onBlur={handleBlur('state')}
                   value={values.state}
@@ -399,7 +454,7 @@ const Signup = ({navigation}) => {
                   onChangeText={handleChange('phone')}
                   onBlur={handleBlur('phone')}
                   value={values.phone}
-                  keyboardType='number-pad'
+                  keyboardType="number-pad"
                 />
               </Animated.View>
               {touched.phone && errors.phone && (
@@ -408,8 +463,17 @@ const Signup = ({navigation}) => {
             </View>
 
             <TouchableOpacity onPress={handleSubmit} style={styles.button}>
-              <Text style={styles.buttonText}>Register</Text>
+              {loading === true ? (
+                <>
+                  <ActivityIndicator size={'large'} />
+                </>
+              ) : (
+                <Text style={styles.buttonText}>Register</Text>
+              )}
             </TouchableOpacity>
+            {requestError && (
+                <Text style={styles.errorText}>{requestError}</Text>
+              )}
           </>
         )}
       </Formik>
@@ -484,8 +548,9 @@ const styles = StyleSheet.create({
   },
   errorText: {
     color: 'red',
-    marginTop: 5,
+    marginVertical: 5,
   },
+  
   titleWrapper: {
     display: 'flex',
     flexDirection: 'row',
