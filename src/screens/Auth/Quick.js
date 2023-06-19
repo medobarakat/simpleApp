@@ -11,6 +11,9 @@ import * as Yup from 'yup';
 import {Formik} from 'formik';
 import {Box, Input, Modal} from 'native-base';
 import Icon from 'react-native-vector-icons/AntDesign';
+import axios from 'axios';
+import {Base_Url, Register_Api} from '../../constants/Apis';
+import {ActivityIndicator} from 'react-native';
 
 const height = Dimensions.get('window').height;
 const width = Dimensions.get('window').width;
@@ -21,12 +24,37 @@ const validationSchema = Yup.object().shape({
 
 const Quick = () => {
   const [modalVisible, setModalVisible] = useState(false);
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
   const initialRef = useRef(null);
   const finalRef = useRef(null);
   const handleFormSubmit = values => {
-    // Handle form submission here
-    console.log(values);
-    setModalVisible(true);
+    setLoading(true);
+    const url = Base_Url + Register_Api;
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    };
+    const body = {
+      "email": values.email,
+      "registrationType": 'EMAIL',
+    };
+
+    console.log("body is ",body)
+    console.log("headers is" , config)
+    axios
+      .post(url, body, config)
+      .then(res => {
+        console.log(res);
+        setModalVisible(true);
+        setLoading(false);
+      })
+      .catch(err => {
+        setLoading(false);
+        console.log(err);
+        setError(true);
+      });
   };
 
   return (
@@ -85,7 +113,13 @@ const Quick = () => {
                 )}
               </Box>
               <TouchableOpacity onPress={handleSubmit} style={styles.button}>
-                <Text style={styles.buttonText}>Register</Text>
+                {loading === true ? (
+                  <>
+                    <ActivityIndicator size={'large'} />
+                  </>
+                ) : (
+                  <Text style={styles.buttonText}>Register</Text>
+                )}
               </TouchableOpacity>
             </>
           )}
