@@ -1,9 +1,12 @@
 import React from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import Home from '../screens/Home';
-import SignUp from '../screens/SignUp';
-import Quick from '../screens/Quick';
 // the screens
+import Home from '../screens/Home';
+import Signup from '../screens/Auth/SignUp';
+import BusinessSignUp from '../screens/Auth/BusinessSignUp';
+import Quick from '../screens/Auth/Quick';
+import Login from '../screens/Auth/Login';
+
 
 const Stack = createNativeStackNavigator();
 
@@ -17,7 +20,14 @@ const LoginNavigation = () => {
           headerShown: false,
         }}
       />
-      <Stack.Screen name="Signup" component={SignUp} 
+      <Stack.Screen name="Signup" component={Signup} 
+       options={{
+        title:"Full Registration",
+        headerTransparent:false,
+        headerTitleAlign: 'center',
+      }}
+      />
+      <Stack.Screen name="BusinessSignup" component={BusinessSignUp} 
        options={{
         title:"Business Registration",
         headerTransparent:false,
@@ -29,6 +39,13 @@ const LoginNavigation = () => {
         title:"Email Register",
         headerTransparent:true,
         headerTitleAlign: 'center',
+      }} />
+      <Stack.Screen name="login" component={Login}
+       options={{
+        title:"Login",
+        headerTransparent:true,
+        headerTitleAlign: 'center',
+        headerShown:false
       }} />
     </Stack.Navigator>
   );

@@ -20,6 +20,15 @@ const Home = ({navigation}) => {
     navigation.navigate('Signup');
   };
 
+  const onPressBusinessSignUpHandler = () => {
+    navigation.navigate('BusinessSignup');
+  };
+
+  const onPressLogin = () => {
+    navigation.navigate('login');
+  };
+
+
   return (
     <KeyboardAwareScrollView
       contentContainerStyle={styles.container}
@@ -41,11 +50,11 @@ const Home = ({navigation}) => {
             </TouchableOpacity>
           </View>
           <View style={styles.btnContainer}>
-            <TouchableOpacity onPress={onPressSignUpHandler} style={styles.button}>
+            <TouchableOpacity onPress={onPressBusinessSignUpHandler} style={styles.button}>
               <Text style={styles.buttonText}>Business Registration</Text>
             </TouchableOpacity>
             <View style={styles.btnContainer}>
-            <TouchableOpacity onPress={onPressSignUpHandler} style={styles.button2}>
+            <TouchableOpacity onPress={onPressLogin} style={styles.button2}>
               <Text style={styles.buttonText}>Account Login</Text>
             </TouchableOpacity>
           </View>

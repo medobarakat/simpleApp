@@ -26,10 +26,10 @@ const validationSchema = Yup.object().shape({
   email: Yup.string().email('Invalid email').required('Email is required'),
   phone: Yup.string().required('Phone is required'),
   address1: Yup.string().required('Address is required'),
-  address2: Yup.string().required('Address 2 is required')
+  address2: Yup.string().required('Address 2 is required'),
 });
 
-const Signup = ({navigation}) => {
+const BusinessSignUp = ({navigation}) => {
   const goBack = () => {
     navigation.goBack();
   };
@@ -70,8 +70,8 @@ const Signup = ({navigation}) => {
           zipCode: '',
           email: '',
           phone: '',
-          address1:'',
-          address2:'',
+          address1: '',
+          address2: '',
         }}
         validationSchema={validationSchema}
         onSubmit={handleSubmit}>
@@ -155,7 +155,7 @@ const Signup = ({navigation}) => {
               {touched.serviceName && errors.serviceName && (
                 <Text style={styles.errorText}>{errors.serviceName}</Text>
               )}
-                <Text style={styles.span}>Address 1</Text>
+              <Text style={styles.span}>Address 1</Text>
               <Animated.View
                 style={[
                   styles.inputWrapper,
@@ -205,7 +205,7 @@ const Signup = ({navigation}) => {
                   value={values.address2}
                 />
               </Animated.View>
-           
+
               {touched.address2 && errors.address2 && (
                 <Text style={styles.errorText}>{errors.address2}</Text>
               )}
@@ -235,7 +235,7 @@ const Signup = ({navigation}) => {
               {touched.city && errors.city && (
                 <Text style={styles.errorText}>{errors.city}</Text>
               )}
-                <Text style={styles.span}>State</Text>
+              <Text style={styles.span}>State</Text>
               <Animated.View
                 style={[
                   styles.inputWrapper,
@@ -261,7 +261,7 @@ const Signup = ({navigation}) => {
               {touched.state && errors.state && (
                 <Text style={styles.errorText}>{errors.state}</Text>
               )}
-                <Text style={styles.span}>Zip Code</Text>
+              <Text style={styles.span}>Zip Code</Text>
               <Animated.View
                 style={[
                   styles.inputWrapper,
@@ -354,7 +354,7 @@ const Signup = ({navigation}) => {
   );
 };
 
-export default Signup;
+export default BusinessSignUp;
 
 const styles = StyleSheet.create({
   container: {
@@ -406,7 +406,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 35,
-    marginBottom:16
+    marginBottom: 16,
   },
   buttonText: {
     color: 'white',
