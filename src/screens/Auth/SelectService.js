@@ -42,7 +42,10 @@ const SelectService = () => {
       const nextPage = page + 1;
       const response = await axios.get(url);
       const jsonData = response.data.content;
-      setData((prevData) => [...prevData, ...jsonData]);
+      console.log(nextPage);
+      console.log(jsonData);
+
+      setData(prevData => [...prevData, ...jsonData]);
       setPage(nextPage);
       setLoading(false);
     } catch (error) {
@@ -50,7 +53,6 @@ const SelectService = () => {
       setLoading(false);
     }
   };
-  
 
   const renderItem = ({item}) => <Text>{item.title}</Text>;
 
@@ -65,15 +67,15 @@ const SelectService = () => {
         onEndReached={loadMoreData}
         onEndReachedThreshold={0.5}
       />
-      <TouchableOpacity style={styles.loadMore} onPress={loadMoreData}>
+      <Button onPress={loadMoreData}>
         {loading ? (
           <View style={styles.loadingIndicator}>
-            <ActivityIndicator size="large"  />
+            <ActivityIndicator size="large" />
           </View>
         ) : (
           <Text style={styles.loadMoreText}>Load More</Text>
         )}
-      </TouchableOpacity>
+      </Button>
     </View>
   );
 };
