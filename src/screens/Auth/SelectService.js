@@ -1,6 +1,15 @@
-import { StyleSheet, Text, View, FlatList, ActivityIndicator } from 'react-native';
-import React, { useEffect, useState } from 'react';
+import {
+  StyleSheet,
+  Text,
+  View,
+  FlatList,
+  ActivityIndicator,
+  TouchableOpacity,
+} from 'react-native';
+import React, {useEffect, useState} from 'react';
 import axios from 'axios';
+import {Base_Url, Get_Service} from '../../constants/Apis';
+import {Button} from 'native-base';
 
 const SelectService = () => {
   const [data, setData] = useState([]);
@@ -12,10 +21,12 @@ const SelectService = () => {
   }, []);
 
   const fetchData = async () => {
+    const url = Base_Url + Get_Service + `?pageNumber=${page}&pageSize=20`;
     try {
       setLoading(true);
-      const response = await axios.get(`YOUR_API_URL?page=${page}`);
-      const jsonData = response.data;
+      const response = await axios.get(url);
+      const jsonData = response.data.content;
+      console.log(jsonData);
       setData(jsonData);
       setLoading(false);
     } catch (error) {
@@ -25,11 +36,12 @@ const SelectService = () => {
   };
 
   const loadMoreData = async () => {
+    const url = Base_Url + Get_Service + `?pageNumber=${page + 1}&pageSize=20`;
     try {
       setLoading(true);
       const nextPage = page + 1;
-      const response = await axios.get(`YOUR_API_URL?page=${nextPage}`);
-      const jsonData = response.data;
+      const response = await axios.get(url);
+      const jsonData = response.data.content;
       setData((prevData) => [...prevData, ...jsonData]);
       setPage(nextPage);
       setLoading(false);
@@ -38,12 +50,11 @@ const SelectService = () => {
       setLoading(false);
     }
   };
+  
 
-  const renderItem = ({ item }) => (
-    <Text>{item.title}</Text>
-  );
+  const renderItem = ({item}) => <Text>{item.title}</Text>;
 
-  const keyExtractor = (item) => item.id.toString();
+  const keyExtractor = item => item.id.toString();
 
   return (
     <View style={styles.container}>
@@ -54,7 +65,15 @@ const SelectService = () => {
         onEndReached={loadMoreData}
         onEndReachedThreshold={0.5}
       />
-      {loading && <ActivityIndicator style={styles.loadingIndicator} size="large" color="blue" />}
+      <TouchableOpacity style={styles.loadMore} onPress={loadMoreData}>
+        {loading ? (
+          <View style={styles.loadingIndicator}>
+            <ActivityIndicator size="large"  />
+          </View>
+        ) : (
+          <Text style={styles.loadMoreText}>Load More</Text>
+        )}
+      </TouchableOpacity>
     </View>
   );
 };
@@ -75,5 +94,21 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
+  },
+  loadMore: {
+    alignSelf: 'center',
+    marginTop: 20,
+    marginBottom: 20,
+    width: '80%',
+    backgroundColor: '#233123',
+    borderRadius: 10,
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    alignItems: 'center',
+  },
+  loadMoreText: {
+    color: 'white',
+    fontSize: 16,
+    fontWeight: 'bold',
   },
 });
