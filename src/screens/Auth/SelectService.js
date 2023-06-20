@@ -13,7 +13,7 @@ import {Button} from 'native-base';
 
 const SelectService = () => {
   const [data, setData] = useState([]);
-  const [page, setPage] = useState(1);
+  const [page, setPage] = useState(0);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -54,7 +54,11 @@ const SelectService = () => {
     }
   };
 
-  const renderItem = ({item}) => <Text>{item.title}</Text>;
+  const renderItem = ({item}) => (
+    <TouchableOpacity style={styles.singleService}>
+      <Text style={styles.txt}>{item.service}</Text>
+    </TouchableOpacity>
+  );
 
   const keyExtractor = item => item.id.toString();
 
@@ -113,4 +117,14 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: 'bold',
   },
+  singleService:{
+    padding: 10,
+    marginVertical: 10,
+    marginHorizontal: 10,
+    borderRadius: 10,
+    backgroundColor: 'red',
+  },
+  txt:{
+    color:"black"
+  }
 });
