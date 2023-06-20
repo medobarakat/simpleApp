@@ -532,6 +532,7 @@ const styles = StyleSheet.create({
   input: {
     height: 60,
   },
+  /////////////////////////////
   button: {
     backgroundColor: '#111b31',
     height: 50,
@@ -550,7 +551,7 @@ const styles = StyleSheet.create({
     color: 'red',
     marginVertical: 5,
   },
-  
+  // ////////////////////////////
   titleWrapper: {
     display: 'flex',
     flexDirection: 'row',

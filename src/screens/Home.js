@@ -8,6 +8,7 @@ import {
 } from 'react-native';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import Icon from 'react-native-vector-icons/AntDesign';
+import { Primary_color, Sec_color } from '../constants/Colors';
 
 const height = Dimensions.get('window').height;
 const width = Dimensions.get('window').width;
@@ -73,11 +74,11 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
   firstSection: {
-    backgroundColor: '#111b31',
+    backgroundColor: Primary_color,
     height: 250,
     borderBottomRightRadius: 130,
     borderBottomLeftRadius: 130,
-    borderColor: '#111b31',
+    borderColor: Primary_color,
     position: 'relative',
   },
   iconWrapper: {
@@ -104,7 +105,7 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
   },
   button: {
-    backgroundColor: '#111b31',
+    backgroundColor: Primary_color,
     width: 200,
     height: 50,
     borderRadius: 25,
@@ -113,7 +114,7 @@ const styles = StyleSheet.create({
     marginTop: height / 26,
   },
   button2:{
-    backgroundColor:"#0e7490",
+    backgroundColor:Sec_color,
     width: 200,
     height: 50,
     borderRadius: 25,

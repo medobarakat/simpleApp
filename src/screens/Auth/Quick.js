@@ -14,6 +14,7 @@ import Icon from 'react-native-vector-icons/AntDesign';
 import axios from 'axios';
 import {Base_Url, Register_Api} from '../../constants/Apis';
 import {ActivityIndicator} from 'react-native';
+import ButtonLoader from '../../Components/ButtonLoader';
 
 const height = Dimensions.get('window').height;
 const width = Dimensions.get('window').width;
@@ -29,6 +30,7 @@ const Quick = () => {
   const initialRef = useRef(null);
   const finalRef = useRef(null);
   const handleFormSubmit = values => {
+    setError("")
     setLoading(true);
     const url = Base_Url + Register_Api;
     const config = {
@@ -52,8 +54,8 @@ const Quick = () => {
       })
       .catch(err => {
         setLoading(false);
-        console.log(err);
-        setError(true);
+        console.log(err.response.data[0].message);
+        setError(err.response.data[0].message);
       });
   };
 
@@ -112,15 +114,8 @@ const Quick = () => {
                   <Text style={styles.errorText}>{errors.email}</Text>
                 )}
               </Box>
-              <TouchableOpacity onPress={handleSubmit} style={styles.button}>
-                {loading === true ? (
-                  <>
-                    <ActivityIndicator size={'large'} />
-                  </>
-                ) : (
-                  <Text style={styles.buttonText}>Register</Text>
-                )}
-              </TouchableOpacity>
+              <ButtonLoader title={"Register"} handleSubmit={handleSubmit} loading={loading} errorMsg={error}/>
+             
             </>
           )}
         </Formik>
