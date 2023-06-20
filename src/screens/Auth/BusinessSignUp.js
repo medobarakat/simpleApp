@@ -187,10 +187,12 @@ const BusinessSignUp = ({navigation}) => {
                     handleServiceSelection,
                   })
                 }
-                borderRadius={10}
-                >
+                borderRadius={10}>
                 Select Services
               </Button>
+              {selectedService && (
+                <Text>{selectedService.service}</Text>
+              )}
               <Text style={styles.span}>First Name</Text>
               <Animated.View
                 style={[
