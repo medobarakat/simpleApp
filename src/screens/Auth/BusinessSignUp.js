@@ -187,7 +187,7 @@ const BusinessSignUp = ({navigation}) => {
                     handleServiceSelection,
                   })
                 }
-                borderRadius={30}
+                borderRadius={10}
                 >
                 Select Services
               </Button>
