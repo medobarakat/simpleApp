@@ -17,6 +17,7 @@ import {Box, Select, CheckIcon, Modal, Button} from 'native-base';
 import CountryPicker from 'react-native-country-picker-modal';
 import {Base_Url, Register_Api} from '../../constants/Apis';
 import axios from 'axios';
+import ButtonLoader from '../../Components/ButtonLoader';
 
 const height = Dimensions.get('window').height;
 const width = Dimensions.get('window').width;
@@ -41,7 +42,7 @@ const BusinessSignUp = ({navigation}) => {
   const [countryError, setCountryError] = useState(false);
   const [loading, setLoading] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
-  const [requestError, setRequestError] = useState("");
+  const [requestError, setRequestError] = useState('');
   const initialRef = useRef(null);
   const finalRef = useRef(null);
   const onSelect = country => {
@@ -71,13 +72,13 @@ const BusinessSignUp = ({navigation}) => {
     } else {
       //  all validations passed
       // console.log(values);
-       handleFormSubmitApi(values);
+      handleFormSubmitApi(values);
     }
   };
 
   const handleFormSubmitApi = values => {
     setLoading(true);
-    setRequestError(false)
+    setRequestError(false);
     // console.log(values)
     // console.log(body)
     const url = Base_Url + Register_Api;
@@ -104,19 +105,23 @@ const BusinessSignUp = ({navigation}) => {
       .then(res => {
         // console.log(res);
         setLoading(false);
-        console.log(res.data.message)
-          setModalVisible(true);
-      
+        console.log(res.data.message);
+        setModalVisible(true);
       })
       .catch(err => {
         setLoading(false);
         setRequestError(err.response.data[0].message);
         setError(true);
-        setRequestError("Please Check Your Information It Might Be Exist")
+        setRequestError('Please Check Your Information It Might Be Exist');
       });
   };
 
-  // const [selectedService, setSelectedService] = useState('');
+  const [selectedService, setSelectedService] = useState();
+
+  const handleServiceSelection = service => {
+    setSelectedService(service);
+    console.log(service);
+  };
 
   return (
     <KeyboardAwareScrollView contentContainerStyle={styles.container}>
@@ -168,14 +173,22 @@ const BusinessSignUp = ({navigation}) => {
           <>
             <View style={styles.inputContainer}>
               <Animated.View style={[styles.inputWrapper2]}>
-                <CountryPicker onSelect={e => onSelect(e.name)}/>
+                <CountryPicker onSelect={e => onSelect(e.name)} />
                 <Text style={styles.span}>{country}</Text>
               </Animated.View>
               {countryError && (
                 <Text style={styles.errorText}>Select A Country Please</Text>
               )}
               <Text style={styles.span}>Services</Text>
-                <Button onPress={()=>navigation.navigate('selectService')}>Select Services</Button>
+              <Button
+                onPress={() =>
+                  navigation.navigate('selectService', {
+                    selectedService,
+                    handleServiceSelection,
+                  })
+                }>
+                Select Services
+              </Button>
               <Text style={styles.span}>First Name</Text>
               <Animated.View
                 style={[
@@ -228,7 +241,6 @@ const BusinessSignUp = ({navigation}) => {
               {touched.LastName && errors.LastName && (
                 <Text style={styles.errorText}>{errors.LastName}</Text>
               )}
-
               {/*
 
               <Animated.View
@@ -299,7 +311,6 @@ const BusinessSignUp = ({navigation}) => {
                 <Text style={styles.errorText}>{errors.address1}</Text>
               )}
               <Text style={styles.span}>Address 2</Text>
-
               <Animated.View
                 style={[
                   styles.inputWrapper,
@@ -322,7 +333,6 @@ const BusinessSignUp = ({navigation}) => {
                   value={values.address2}
                 />
               </Animated.View>
-
               {touched.address2 && errors.address2 && (
                 <Text style={styles.errorText}>{errors.address2}</Text>
               )}
@@ -406,7 +416,6 @@ const BusinessSignUp = ({navigation}) => {
                 <Text style={styles.errorText}>{errors.zipCode}</Text>
               )}
               <Text style={styles.span}>Email</Text>
-
               <Animated.View
                 style={[
                   styles.inputWrapper,
@@ -434,7 +443,6 @@ const BusinessSignUp = ({navigation}) => {
                 <Text style={styles.errorText}>{errors.email}</Text>
               )}
               <Text style={styles.span}>Phone</Text>
-
               <Animated.View
                 style={[
                   styles.inputWrapper,
@@ -462,8 +470,14 @@ const BusinessSignUp = ({navigation}) => {
                 <Text style={styles.errorText}>{errors.phone}</Text>
               )}
             </View>
+            <ButtonLoader
+              title={'Register'}
+              handleSubmit={handleSubmit}
+              loading={loading}
+              errorMsg={requestError}
+            />
 
-            <TouchableOpacity onPress={handleSubmit} style={styles.button}>
+            {/* <TouchableOpacity onPress={handleSubmit} style={styles.button}>
               {loading === true ? (
                 <>
                   <ActivityIndicator size={'large'} />
@@ -474,7 +488,7 @@ const BusinessSignUp = ({navigation}) => {
             </TouchableOpacity>
             {requestError && (
                 <Text style={styles.errorText}>{requestError}</Text>
-              )}
+              )} */}
           </>
         )}
       </Formik>
@@ -551,7 +565,7 @@ const styles = StyleSheet.create({
     color: 'red',
     marginVertical: 5,
   },
-  
+
   titleWrapper: {
     display: 'flex',
     flexDirection: 'row',
