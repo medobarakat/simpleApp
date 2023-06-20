@@ -10,11 +10,19 @@ import React, {useEffect, useState} from 'react';
 import axios from 'axios';
 import {Base_Url, Get_Service} from '../../constants/Apis';
 import {Button} from 'native-base';
+import {Light_Sec_color, Sec_color} from '../../constants/Colors';
 
-const SelectService = () => {
+const SelectService = ({ navigation, route }) => {
+  const { selectedService, handleSelectService } = route.params;
   const [data, setData] = useState([]);
   const [page, setPage] = useState(0);
   const [loading, setLoading] = useState(false);
+  // const [selected, setSelected] = useState({});
+
+  // const handleServiceSelection = selectedItem => {
+  //   console.log(selectedItem)
+  //   setSelected(selectedItem);
+  // };
 
   useEffect(() => {
     fetchData();
@@ -26,7 +34,7 @@ const SelectService = () => {
       setLoading(true);
       const response = await axios.get(url);
       const jsonData = response.data.content;
-      console.log(jsonData);
+      // console.log(jsonData);
       setData(jsonData);
       setLoading(false);
     } catch (error) {
@@ -42,8 +50,8 @@ const SelectService = () => {
       const nextPage = page + 1;
       const response = await axios.get(url);
       const jsonData = response.data.content;
-      console.log(nextPage);
-      console.log(jsonData);
+      // console.log(nextPage);
+      // console.log(jsonData);
 
       setData(prevData => [...prevData, ...jsonData]);
       setPage(nextPage);
@@ -54,11 +62,20 @@ const SelectService = () => {
     }
   };
 
-  const renderItem = ({item}) => (
-    <TouchableOpacity style={styles.singleService}>
-      <Text style={styles.txt}>{item.service}</Text>
-    </TouchableOpacity>
-  );
+  const renderItem = ({item}) => {
+    const isSelected = item.id === selected.id;
+    return (
+      <TouchableOpacity
+        onPress={() => handleServiceSelection(item)}
+        style={[
+          styles.singleService,
+          isSelected && styles.selectedService, // Apply different style if selected
+        ]}
+      >
+        <Text style={styles.txt}>{item.service}</Text>
+      </TouchableOpacity>
+    );
+  };
 
   const keyExtractor = item => item.id.toString();
 
@@ -71,14 +88,8 @@ const SelectService = () => {
         onEndReached={loadMoreData}
         onEndReachedThreshold={0.5}
       />
-      <Button onPress={loadMoreData}>
-        {loading ? (
-          <View style={styles.loadingIndicator}>
-            <ActivityIndicator size="large" />
-          </View>
-        ) : (
-          <Text style={styles.loadMoreText}>Load More</Text>
-        )}
+      <Button isLoading={loading} onPress={loadMoreData}>
+        Load More
       </Button>
     </View>
   );
@@ -117,14 +128,20 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: 'bold',
   },
-  singleService:{
+  singleService: {
     padding: 10,
     marginVertical: 10,
     marginHorizontal: 10,
     borderRadius: 10,
-    backgroundColor: 'red',
+    backgroundColor: Sec_color,
   },
-  txt:{
-    color:"black"
-  }
+  txt: {
+    color: 'white',
+    textAlign: 'center',
+    fontSize:16,
+    fontWeight:"400"
+  },
+  selectedService: {
+    backgroundColor: Light_Sec_color, 
+  },
 });
