@@ -103,7 +103,7 @@ const Quick = () => {
                 <Input
                   borderRadius={20}
                   height={50}
-                  placeholder="Email"
+                  placeholder="example@email.com"
                   w="80%"
                   onChangeText={handleChange('email')}
                   onBlur={handleBlur('email')}

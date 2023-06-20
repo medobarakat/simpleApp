@@ -186,7 +186,9 @@ const BusinessSignUp = ({navigation}) => {
                     selectedService,
                     handleServiceSelection,
                   })
-                }>
+                }
+                borderRadius={30}
+                >
                 Select Services
               </Button>
               <Text style={styles.span}>First Name</Text>
@@ -432,7 +434,7 @@ const BusinessSignUp = ({navigation}) => {
                 ]}>
                 <TextInput
                   style={styles.input}
-                  placeholder="Email"
+                  placeholder="example@email.com"
                   onChangeText={handleChange('email')}
                   onBlur={handleBlur('email')}
                   value={values.email}

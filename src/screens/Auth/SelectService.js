@@ -12,20 +12,22 @@ import {Base_Url, Get_Service} from '../../constants/Apis';
 import {Button} from 'native-base';
 import {Light_Sec_color, Sec_color} from '../../constants/Colors';
 
-const SelectService = ({ navigation, route }) => {
-  const { selectedService, handleSelectService } = route.params;
+const SelectService = ({navigation, route}) => {
+   const {selectedService, handleServiceSelection} = route.params;
   const [data, setData] = useState([]);
   const [page, setPage] = useState(0);
   const [loading, setLoading] = useState(false);
-  // const [selected, setSelected] = useState({});
+  const [selected, setSelected] = useState({});
 
-  // const handleServiceSelection = selectedItem => {
-  //   console.log(selectedItem)
-  //   setSelected(selectedItem);
-  // };
+  const handleServiceSelectioninside = selectedItem => {
+    // console.log(selectedItem)
+    setSelected(selectedItem);
+    handleServiceSelection(selectedItem)
+  };
 
   useEffect(() => {
     fetchData();
+    setSelected(selectedService);
   }, []);
 
   const fetchData = async () => {
@@ -63,15 +65,14 @@ const SelectService = ({ navigation, route }) => {
   };
 
   const renderItem = ({item}) => {
-    const isSelected = item.id === selected.id;
+    const isSelected = item?.id === selected?.id;
     return (
       <TouchableOpacity
-        onPress={() => handleServiceSelection(item)}
+        onPress={() => handleServiceSelectioninside(item)}
         style={[
           styles.singleService,
           isSelected && styles.selectedService, // Apply different style if selected
-        ]}
-      >
+        ]}>
         <Text style={styles.txt}>{item.service}</Text>
       </TouchableOpacity>
     );
@@ -138,10 +139,10 @@ const styles = StyleSheet.create({
   txt: {
     color: 'white',
     textAlign: 'center',
-    fontSize:16,
-    fontWeight:"400"
+    fontSize: 16,
+    fontWeight: '400',
   },
   selectedService: {
-    backgroundColor: Light_Sec_color, 
+    backgroundColor: Light_Sec_color,
   },
 });

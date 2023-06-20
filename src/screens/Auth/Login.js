@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View, Dimensions } from 'react-native';
+import { StyleSheet, View, Dimensions, TouchableOpacity } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { Box, Input, Button, Text } from 'native-base';
 import { Formik } from 'formik';
@@ -15,17 +15,21 @@ const validationSchema = Yup.object().shape({
   password: Yup.string().required('Password is required'),
 });
 
-const Login = () => {
+const Login = ({ navigation }) => {
   const handleFormSubmit = (values) => {
     console.log(values);
     // Perform login logic here
+  };
+
+  const handleSignupLinkPress = () => {
+    navigation.goBack();
   };
 
   return (
     <KeyboardAwareScrollView style={styles.container}>
       <View style={styles.formWrapper}>
         <Box marginBottom={75}>
-        <View style={styles.titleWrapper}>
+          <View style={styles.titleWrapper}>
             <Icon name="closecircleo" size={35} />
             <Text style={styles.titleText}>App Board</Text>
           </View>
@@ -43,7 +47,7 @@ const Login = () => {
                 <Input
                   borderRadius={20}
                   height={50}
-                  placeholder="Email"
+                  placeholder="example@email.com"
                   w="80%"
                   onChangeText={handleChange('email')}
                   onBlur={handleBlur('email')}
@@ -79,6 +83,12 @@ const Login = () => {
               >
                 <Text style={styles.buttonText}>Login</Text>
               </Button>
+
+              <TouchableOpacity onPress={handleSignupLinkPress}>
+                <Text style={styles.signupLink}>
+                  Don't have an account? Go back
+                </Text>
+              </TouchableOpacity>
             </>
           )}
         </Formik>
@@ -102,13 +112,13 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   titleText: {
-    fontSize: 24,
+    fontSize: 22,
     textAlign: 'center',
     marginBottom: 20,
     color: 'black',
     fontWeight: '400',
     marginLeft: 10,
-    marginTop:10
+    marginTop: 10,
   },
   span: {
     marginBottom: 10,
@@ -129,6 +139,10 @@ const styles = StyleSheet.create({
   errorText: {
     color: 'red',
     marginTop: 5,
+  },
+  signupLink: {
+    marginTop: 20,
+    color: Sec_color,
   },
 });
 
