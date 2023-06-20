@@ -17,6 +17,7 @@ import {Box, Select, CheckIcon, Modal} from 'native-base';
 import CountryPicker from 'react-native-country-picker-modal';
 import {Base_Url, Register_Api} from '../../constants/Apis';
 import axios from 'axios';
+import ButtonLoader from '../../Components/ButtonLoader';
 
 const height = Dimensions.get('window').height;
 const width = Dimensions.get('window').width;
@@ -461,8 +462,9 @@ const Signup = ({navigation}) => {
                 <Text style={styles.errorText}>{errors.phone}</Text>
               )}
             </View>
+            <ButtonLoader title={"Register"} handleSubmit={handleSubmit} loading={loading} errorMsg={requestError}/>
 
-            <TouchableOpacity onPress={handleSubmit} style={styles.button}>
+            {/* <TouchableOpacity onPress={handleSubmit} style={styles.button}>
               {loading === true ? (
                 <>
                   <ActivityIndicator size={'large'} />
@@ -473,7 +475,7 @@ const Signup = ({navigation}) => {
             </TouchableOpacity>
             {requestError && (
                 <Text style={styles.errorText}>{requestError}</Text>
-              )}
+              )} */}
           </>
         )}
       </Formik>
