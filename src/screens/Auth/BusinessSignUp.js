@@ -40,7 +40,7 @@ const BusinessSignUp = ({navigation}) => {
   const [country, setCountry] = useState('');
   const [countryError, setCountryError] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [modalVisible, setModalVisible] = useState(true);
+  const [modalVisible, setModalVisible] = useState(false);
   const [requestError, setRequestError] = useState('');
   const initialRef = useRef(null);
   const finalRef = useRef(null);
@@ -82,22 +82,48 @@ const BusinessSignUp = ({navigation}) => {
         'Content-Type': 'application/json',
       },
     };
+    // {
+    //   "email": "string",
+    //   "address1": "string",
+    //   "address2": "string",
+    //   "city": "string",
+    //   "state": "string",
+    //   "zipCode": "string",
+    //   "country": "string",
+    //   "businessName": "string",
+    //   "phoneNo": "string",
+    //   "businessServices": [
+    //   {
+    //   "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+    //   "service": "string"
+    //   }
+    //   ],
+    //   "registrationType": "BUSINESS"
+    //   }
+
     const body = {
       email: values.email,
-      BusinessName: values.BusinessName,
       address1: values.address1,
       address2: values.address2,
       city: values.city,
       state: values.state,
       zipCode: values.zipCode,
       country: country,
+      BusinessName: values.BusinessName,
       phoneNo: values.phone,
-      registrationType: 'FULL_REGISTRATION',
+      businessServices: [
+        {
+          id: selectedService.id,
+          service: selectedService.service,
+        },
+      ],
+      registrationType: 'BUSINESS',
     };
+    console.log(body);
     axios
       .post(url, body, config)
       .then(res => {
-        // console.log(res);
+         console.log(res);
         setLoading(false);
         console.log(res.data.message);
         setModalVisible(true);
@@ -105,8 +131,7 @@ const BusinessSignUp = ({navigation}) => {
       .catch(err => {
         setLoading(false);
         setRequestError(err.response.data[0].message);
-        setError(true);
-        setRequestError('Please Check Your Information It Might Be Exist');
+        // setError(true);
       });
   };
 
@@ -124,17 +149,14 @@ const BusinessSignUp = ({navigation}) => {
         <Modal.Content maxWidth="400px">
           <Modal.Header>Success!</Modal.Header>
           <Modal.Body>
-            <Text style={styles.modalText}>
-              Registration successful
-            </Text>
+            <Text style={styles.modalText}>Registration successful</Text>
           </Modal.Body>
           <Modal.Footer>
             <Button
               onPress={() => {
                 setModalVisible(false);
                 navigation.replace('login');
-              }}
-            >
+              }}>
               Okay
             </Button>
           </Modal.Footer>
