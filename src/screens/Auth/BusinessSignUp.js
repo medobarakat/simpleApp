@@ -23,8 +23,7 @@ const height = Dimensions.get('window').height;
 const width = Dimensions.get('window').width;
 
 const validationSchema = Yup.object().shape({
-  firstName: Yup.string().required('First Name is required'),
-  LastName: Yup.string().required('Last Name is required'),
+  BusinessName: Yup.string().required('Business Name is required'),
   city: Yup.string().required('City is required'),
   state: Yup.string().required('State is required'),
   zipCode: Yup.string()
@@ -33,7 +32,7 @@ const validationSchema = Yup.object().shape({
     .max(5, 'you have entered wrong zip code'),
   email: Yup.string().email('Invalid email').required('Email is required'),
   phone: Yup.string().required('Phone is required'),
-  address1: Yup.string().required('Address is required'),
+  address1: Yup.string().required('Address 1 is required'),
   address2: Yup.string().required('Address 2 is required'),
 });
 
@@ -49,10 +48,6 @@ const BusinessSignUp = ({navigation}) => {
     setCountry(country);
     setCountryError(false);
   };
-  // return (
-  // const goBack = () => {
-  //   navigation.goBack();
-  // };
 
   const slideAnim = useRef(new Animated.Value(0)).current;
 
@@ -89,8 +84,7 @@ const BusinessSignUp = ({navigation}) => {
     };
     const body = {
       email: values.email,
-      firstName: values.firstName,
-      lastName: values.LastName,
+      BusinessName: values.BusinessName,
       address1: values.address1,
       address2: values.address2,
       city: values.city,
@@ -150,8 +144,7 @@ const BusinessSignUp = ({navigation}) => {
       </Box>
       <Formik
         initialValues={{
-          firstName: '',
-          LastName: '',
+          BusinessName: '',
           city: '',
           state: '',
           zipCode: '',
@@ -174,9 +167,11 @@ const BusinessSignUp = ({navigation}) => {
             <View style={styles.inputContainer}>
               <Animated.View style={[styles.inputWrapper2]}>
                 <CountryPicker onSelect={e => onSelect(e.name)} />
-                <Text style={styles.span}>{country}</Text>
+                {country && (
+                  <Text style={styles.span}>Selected Country Is {country}</Text>
+                )}
               </Animated.View>
-              {countryError && (
+              {countryError == true && (
                 <Text style={styles.errorText}>Select A Country Please</Text>
               )}
               <Text style={styles.span}>Services</Text>
@@ -191,9 +186,11 @@ const BusinessSignUp = ({navigation}) => {
                 Select Services
               </Button>
               {selectedService && (
-                <Text>{selectedService.service}</Text>
+                <Text style={styles.span}>
+                  selected Service Is {selectedService.service}
+                </Text>
               )}
-              <Text style={styles.span}>First Name</Text>
+              <Text style={styles.span}>Business Name</Text>
               <Animated.View
                 style={[
                   styles.inputWrapper,
@@ -210,41 +207,16 @@ const BusinessSignUp = ({navigation}) => {
                 ]}>
                 <TextInput
                   style={styles.input}
-                  placeholder="First Name"
-                  onChangeText={handleChange('firstName')}
-                  onBlur={handleBlur('firstName')}
-                  value={values.firstName}
+                  placeholder="Business Name"
+                  onChangeText={handleChange('BusinessName')}
+                  onBlur={handleBlur('BusinessName')}
+                  value={values.BusinessName}
                 />
               </Animated.View>
-              {touched.firstName && errors.firstName && (
-                <Text style={styles.errorText}>{errors.firstName}</Text>
+              {touched.BusinessName && errors.BusinessName && (
+                <Text style={styles.errorText}>{errors.BusinessName}</Text>
               )}
-              <Text style={styles.span}>Last Name</Text>
-              <Animated.View
-                style={[
-                  styles.inputWrapper,
-                  {
-                    transform: [
-                      {
-                        translateY: slideAnim.interpolate({
-                          inputRange: [0, 1],
-                          outputRange: [200, 0],
-                        }),
-                      },
-                    ],
-                  },
-                ]}>
-                <TextInput
-                  style={styles.input}
-                  placeholder="Last Name"
-                  onChangeText={handleChange('LastName')}
-                  onBlur={handleBlur('LastName')}
-                  value={values.LastName}
-                />
-              </Animated.View>
-              {touched.LastName && errors.LastName && (
-                <Text style={styles.errorText}>{errors.LastName}</Text>
-              )}
+
               {/*
 
               <Animated.View
