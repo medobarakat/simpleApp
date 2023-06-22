@@ -6,7 +6,7 @@ import {
   TouchableOpacity,
   ActivityIndicator,Dimensions
 } from 'react-native';
-import {Primary_color} from '../constants/Colors';
+import {Primary_color, Sec_color} from '../constants/Colors';
 
 const height = Dimensions.get('window').height;
 const width = Dimensions.get('window').width;
@@ -32,7 +32,7 @@ export default ButtonLoader;
 
 const styles = StyleSheet.create({
   button: {
-    backgroundColor: Primary_color,
+    backgroundColor: Sec_color,
     height: 50,
     width: width / 1.4,
     alignItems: 'center',

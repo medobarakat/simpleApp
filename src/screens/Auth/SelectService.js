@@ -23,6 +23,7 @@ const SelectService = ({navigation, route}) => {
     // console.log(selectedItem)
     setSelected(selectedItem);
     handleServiceSelection(selectedItem)
+    navigation.goBack()
   };
 
   useEffect(() => {
