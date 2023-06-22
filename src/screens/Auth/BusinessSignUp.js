@@ -114,7 +114,7 @@ const BusinessSignUp = ({navigation}) => {
       state: values.state,
       zipCode: values.zipCode,
       country: country,
-      BusinessName: values.BusinessName,
+      businessName: values.BusinessName,
       phoneNo: values.phone,
       businessServices: [
         {
@@ -124,7 +124,7 @@ const BusinessSignUp = ({navigation}) => {
       ],
       registrationType: 'BUSINESS',
     };
-    console.log(body);
+    console.log(JSON.stringify(body));
     axios
       .post(url, body, config)
       .then(res => {
