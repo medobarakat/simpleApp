@@ -42,6 +42,9 @@ const BusinessSignUp = ({navigation}) => {
   const [loading, setLoading] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
   const [requestError, setRequestError] = useState('');
+  const [selectedService, setSelectedService] = useState();
+  const [selectedServiceError, setSelectedServiceError] = useState("");
+
   const initialRef = useRef(null);
   const finalRef = useRef(null);
   const onSelect = country => {
@@ -64,7 +67,9 @@ const BusinessSignUp = ({navigation}) => {
     if (country === '') {
       setCountryError(true);
       console.log('no country');
-    } else {
+    }else if (selectedService === ""){
+      setSelectedServiceError(true)
+    }else {
       //  all validations passed
       // console.log(values);
       handleFormSubmitApi(values);
@@ -135,11 +140,10 @@ const BusinessSignUp = ({navigation}) => {
       });
   };
 
-  const [selectedService, setSelectedService] = useState();
 
   const handleServiceSelection = service => {
     setSelectedService(service);
-    console.log(service);
+    setSelectedServiceError(false)
   };
 
   return (
@@ -218,6 +222,9 @@ const BusinessSignUp = ({navigation}) => {
                 <Text style={styles.span}>
                   selected Service Is {selectedService.service}
                 </Text>
+              )}
+                {countryError == true && (
+                <Text style={styles.errorText}>Select A Services Please</Text>
               )}
               <Text style={styles.span}>Business Name</Text>
               <Animated.View
