@@ -40,7 +40,7 @@ const BusinessSignUp = ({navigation}) => {
   const [country, setCountry] = useState('');
   const [countryError, setCountryError] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [modalVisible, setModalVisible] = useState(false);
+  const [modalVisible, setModalVisible] = useState(true);
   const [requestError, setRequestError] = useState('');
   const initialRef = useRef(null);
   const finalRef = useRef(null);
@@ -120,17 +120,24 @@ const BusinessSignUp = ({navigation}) => {
   return (
     <KeyboardAwareScrollView contentContainerStyle={styles.container}>
       {/* start of the modal */}
-      <Modal
-        isOpen={modalVisible}
-        onClose={() => setModalVisible(false)}
-        initialFocusRef={initialRef}
-        finalFocusRef={finalRef}>
-        <Modal.Content>
-          <Modal.CloseButton />
-          <Modal.Header>Quick Registration Successfully</Modal.Header>
+      <Modal isOpen={modalVisible} onClose={() => setModalVisible(false)}>
+        <Modal.Content maxWidth="400px">
+          <Modal.Header>Success!</Modal.Header>
           <Modal.Body>
-            <Text>Quick Registration Done Successfully</Text>
+            <Text style={styles.modalText}>
+              Registration successful
+            </Text>
           </Modal.Body>
+          <Modal.Footer>
+            <Button
+              onPress={() => {
+                setModalVisible(false);
+                navigation.replace('login');
+              }}
+            >
+              Okay
+            </Button>
+          </Modal.Footer>
         </Modal.Content>
       </Modal>
       {/* end of the modal */}
