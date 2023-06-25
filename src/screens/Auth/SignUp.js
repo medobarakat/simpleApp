@@ -13,7 +13,7 @@ import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import Icon from 'react-native-vector-icons/AntDesign';
 import {Formik} from 'formik';
 import * as Yup from 'yup';
-import {Box, Select, CheckIcon, Modal} from 'native-base';
+import {Box, Select, CheckIcon, Modal, Button} from 'native-base';
 import CountryPicker from 'react-native-country-picker-modal';
 import {Base_Url, Register_Api} from '../../constants/Apis';
 import axios from 'axios';

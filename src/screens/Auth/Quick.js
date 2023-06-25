@@ -9,7 +9,7 @@ import {
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import * as Yup from 'yup';
 import {Formik} from 'formik';
-import {Box, Input, Modal} from 'native-base';
+import {Box, Button, Input, Modal} from 'native-base';
 import Icon from 'react-native-vector-icons/AntDesign';
 import axios from 'axios';
 import {Base_Url, Register_Api} from '../../constants/Apis';

@@ -87,25 +87,6 @@ const BusinessSignUp = ({navigation}) => {
         'Content-Type': 'application/json',
       },
     };
-    // {
-    //   "email": "string",
-    //   "address1": "string",
-    //   "address2": "string",
-    //   "city": "string",
-    //   "state": "string",
-    //   "zipCode": "string",
-    //   "country": "string",
-    //   "businessName": "string",
-    //   "phoneNo": "string",
-    //   "businessServices": [
-    //   {
-    //   "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-    //   "service": "string"
-    //   }
-    //   ],
-    //   "registrationType": "BUSINESS"
-    //   }
-
     const body = {
       email: values.email,
       address1: values.address1,
