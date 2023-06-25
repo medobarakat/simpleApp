@@ -581,4 +581,7 @@ const styles = StyleSheet.create({
     marginVertical: 15,
     color: 'black',
   },
+  modalText:{
+    color:"black"
+  }
 });

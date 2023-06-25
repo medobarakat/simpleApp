@@ -23,7 +23,7 @@ const validationSchema = Yup.object().shape({
   email: Yup.string().email('Invalid email').required('Email is required'),
 });
 
-const Quick = () => {
+const Quick = ({navigation}) => {
   const [modalVisible, setModalVisible] = useState(false);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
@@ -55,6 +55,8 @@ const Quick = () => {
       .catch(err => {
         setLoading(false);
         console.log(err.response.data[0].message);
+        //console.warn(err.response.data[0].message);
+        console.warn(err)
         setError(err.response.data[0].message);
       });
   };
@@ -178,6 +180,9 @@ const styles = StyleSheet.create({
     color: 'red',
     marginTop: 15,
   },
+  modalText:{
+    color:"black"
+  }
 });
 
 export default Quick;
