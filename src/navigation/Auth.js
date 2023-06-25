@@ -35,7 +35,7 @@ const LoginNavigation = () => {
       />
       <Stack.Screen name="quick" component={Quick}
        options={{
-        title:"Email Register",
+        title:"Email Registration",
         headerTransparent:true,
         headerTitleAlign: 'center',
       }} />

@@ -69,7 +69,7 @@ const Quick = ({navigation}) => {
           <Modal.Header>Success!</Modal.Header>
           <Modal.Body>
             <Text style={styles.modalText}>
-              Quick Registration successful
+              Quick Registration was Successfully
             </Text>
           </Modal.Body>
           <Modal.Footer>

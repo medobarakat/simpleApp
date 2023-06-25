@@ -127,7 +127,7 @@ const Signup = ({navigation}) => {
           <Modal.Header>Success!</Modal.Header>
           <Modal.Body>
             <Text style={styles.modalText}>
-              Registration successful
+              Registration Was Successfully
             </Text>
           </Modal.Body>
           <Modal.Footer>
@@ -175,14 +175,7 @@ const Signup = ({navigation}) => {
         }) => (
           <>
             <View style={styles.inputContainer}>
-              <Animated.View style={[styles.inputWrapper2]}>
-                <CountryPicker onSelect={e => onSelect(e.name)} />
-                <Text style={styles.span}>{country}</Text>
-              </Animated.View>
-
-              {countryError && (
-                <Text style={styles.errorText}>Select A Country Please</Text>
-              )}
+              
               <Text style={styles.span}>First Name</Text>
               <Animated.View
                 style={[
@@ -385,7 +378,7 @@ const Signup = ({navigation}) => {
               {touched.state && errors.state && (
                 <Text style={styles.errorText}>{errors.state}</Text>
               )}
-              <Text style={styles.span}>Zip Code</Text>
+               <Text style={styles.span}>Zip Code</Text>
               <Animated.View
                 style={[
                   styles.inputWrapper,
@@ -412,6 +405,15 @@ const Signup = ({navigation}) => {
               {touched.zipCode && errors.zipCode && (
                 <Text style={styles.errorText}>{errors.zipCode}</Text>
               )}
+              <Animated.View style={[styles.inputWrapper2]}>
+                <CountryPicker onSelect={e => onSelect(e.name)} />
+                <Text style={styles.span}>{country}</Text>
+              </Animated.View>
+
+              {countryError && (
+                <Text style={styles.errorText}>Select A Country Please</Text>
+              )}
+             
               <Text style={styles.span}>Email</Text>
 
               <Animated.View

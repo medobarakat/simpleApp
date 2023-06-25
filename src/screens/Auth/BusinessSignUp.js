@@ -43,7 +43,7 @@ const BusinessSignUp = ({navigation}) => {
   const [modalVisible, setModalVisible] = useState(false);
   const [requestError, setRequestError] = useState('');
   const [selectedService, setSelectedService] = useState();
-  const [selectedServiceError, setSelectedServiceError] = useState("");
+  const [selectedServiceError, setSelectedServiceError] = useState('');
 
   const initialRef = useRef(null);
   const finalRef = useRef(null);
@@ -67,9 +67,9 @@ const BusinessSignUp = ({navigation}) => {
     if (country === '') {
       setCountryError(true);
       console.log('no country');
-    }else if (selectedService === ""){
-      setSelectedServiceError(true)
-    }else {
+    } else if (selectedService === '') {
+      setSelectedServiceError(true);
+    } else {
       //  all validations passed
       // console.log(values);
       handleFormSubmitApi(values);
@@ -109,7 +109,7 @@ const BusinessSignUp = ({navigation}) => {
     axios
       .post(url, body, config)
       .then(res => {
-         console.log(res);
+        console.log(res);
         setLoading(false);
         console.log(res.data.message);
         setModalVisible(true);
@@ -121,10 +121,9 @@ const BusinessSignUp = ({navigation}) => {
       });
   };
 
-
   const handleServiceSelection = service => {
     setSelectedService(service);
-    setSelectedServiceError(false)
+    setSelectedServiceError(false);
   };
 
   return (
@@ -134,7 +133,7 @@ const BusinessSignUp = ({navigation}) => {
         <Modal.Content maxWidth="400px">
           <Modal.Header>Success!</Modal.Header>
           <Modal.Body>
-            <Text style={styles.modalText}>Registration successful</Text>
+            <Text style={styles.modalText}>Registration Was Successfully</Text>
           </Modal.Body>
           <Modal.Footer>
             <Button
@@ -179,34 +178,6 @@ const BusinessSignUp = ({navigation}) => {
         }) => (
           <>
             <View style={styles.inputContainer}>
-              <Animated.View style={[styles.inputWrapper2]}>
-                <CountryPicker onSelect={e => onSelect(e.name)} />
-                {country && (
-                  <Text style={styles.span}>Selected Country Is {country}</Text>
-                )}
-              </Animated.View>
-              {countryError == true && (
-                <Text style={styles.errorText}>Select A Country Please</Text>
-              )}
-              <Text style={styles.span}>Services</Text>
-              <Button
-                onPress={() =>
-                  navigation.navigate('selectService', {
-                    selectedService,
-                    handleServiceSelection,
-                  })
-                }
-                borderRadius={10}>
-                Select Services
-              </Button>
-              {selectedService && (
-                <Text style={styles.span}>
-                  selected Service Is {selectedService.service}
-                </Text>
-              )}
-                {countryError == true && (
-                <Text style={styles.errorText}>Select A Services Please</Text>
-              )}
               <Text style={styles.span}>Business Name</Text>
               <Animated.View
                 style={[
@@ -232,6 +203,26 @@ const BusinessSignUp = ({navigation}) => {
               </Animated.View>
               {touched.BusinessName && errors.BusinessName && (
                 <Text style={styles.errorText}>{errors.BusinessName}</Text>
+              )}
+
+              <Text style={styles.span}>Services</Text>
+              <Button
+                onPress={() =>
+                  navigation.navigate('selectService', {
+                    selectedService,
+                    handleServiceSelection,
+                  })
+                }
+                borderRadius={10}>
+                Select Services
+              </Button>
+              {selectedService && (
+                <Text style={styles.span}>
+                  selected Service Is {selectedService.service}
+                </Text>
+              )}
+              {countryError == true && (
+                <Text style={styles.errorText}>Select A Services Please</Text>
               )}
 
               {/*
@@ -329,58 +320,62 @@ const BusinessSignUp = ({navigation}) => {
               {touched.address2 && errors.address2 && (
                 <Text style={styles.errorText}>{errors.address2}</Text>
               )}
-              <Text style={styles.span}>City</Text>
-              <Animated.View
-                style={[
-                  styles.inputWrapper,
-                  {
-                    transform: [
-                      {
-                        translateY: slideAnim.interpolate({
-                          inputRange: [0, 1],
-                          outputRange: [200, 0],
-                        }),
-                      },
-                    ],
-                  },
-                ]}>
-                <TextInput
-                  style={styles.input}
-                  placeholder="City name"
-                  onChangeText={handleChange('city')}
-                  onBlur={handleBlur('city')}
-                  value={values.city}
-                />
-              </Animated.View>
-              {touched.city && errors.city && (
-                <Text style={styles.errorText}>{errors.city}</Text>
-              )}
-              <Text style={styles.span}>State</Text>
-              <Animated.View
-                style={[
-                  styles.inputWrapper,
-                  {
-                    transform: [
-                      {
-                        translateY: slideAnim.interpolate({
-                          inputRange: [0, 1],
-                          outputRange: [200, 0],
-                        }),
-                      },
-                    ],
-                  },
-                ]}>
-                <TextInput
-                  style={styles.input}
-                  placeholder="State"
-                  onChangeText={handleChange('state')}
-                  onBlur={handleBlur('state')}
-                  value={values.state}
-                />
-              </Animated.View>
-              {touched.state && errors.state && (
-                <Text style={styles.errorText}>{errors.state}</Text>
-              )}
+              <>
+                <Text style={styles.span}>City</Text>
+                <Animated.View
+                  style={[
+                    styles.inputWrapper,
+                    {
+                      transform: [
+                        {
+                          translateY: slideAnim.interpolate({
+                            inputRange: [0, 1],
+                            outputRange: [200, 0],
+                          }),
+                        },
+                      ],
+                    },
+                  ]}>
+                  <TextInput
+                    style={styles.input}
+                    placeholder="City name"
+                    onChangeText={handleChange('city')}
+                    onBlur={handleBlur('city')}
+                    value={values.city}
+                  />
+                </Animated.View>
+                {touched.city && errors.city && (
+                  <Text style={styles.errorText}>{errors.city}</Text>
+                )}
+              </>
+              <>
+                <Text style={styles.span}>State</Text>
+                <Animated.View
+                  style={[
+                    styles.inputWrapper,
+                    {
+                      transform: [
+                        {
+                          translateY: slideAnim.interpolate({
+                            inputRange: [0, 1],
+                            outputRange: [200, 0],
+                          }),
+                        },
+                      ],
+                    },
+                  ]}>
+                  <TextInput
+                    style={styles.input}
+                    placeholder="State"
+                    onChangeText={handleChange('state')}
+                    onBlur={handleBlur('state')}
+                    value={values.state}
+                  />
+                </Animated.View>
+                {touched.state && errors.state && (
+                  <Text style={styles.errorText}>{errors.state}</Text>
+                )}
+              </>
               <Text style={styles.span}>Zip Code</Text>
               <Animated.View
                 style={[
@@ -463,6 +458,18 @@ const BusinessSignUp = ({navigation}) => {
                 <Text style={styles.errorText}>{errors.phone}</Text>
               )}
             </View>
+            <>
+              <Animated.View style={[styles.inputWrapper2]}>
+                <CountryPicker onSelect={e => onSelect(e.name)} />
+                {country && (
+                  <Text style={styles.span}>Selected Country Is {country}</Text>
+                )}
+              </Animated.View>
+              {countryError == true && (
+                <Text style={styles.errorText}>Select A Country Please</Text>
+              )}
+            </>
+
             <ButtonLoader
               title={'Register'}
               handleSubmit={handleSubmit}
@@ -581,7 +588,7 @@ const styles = StyleSheet.create({
     marginVertical: 15,
     color: 'black',
   },
-  modalText:{
-    color:"black"
-  }
+  modalText: {
+    color: 'black',
+  },
 });
