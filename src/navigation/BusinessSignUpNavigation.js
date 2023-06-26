@@ -3,6 +3,7 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 // the screens
 import BusinessSignUp from '../screens/Auth/BusinessSignUp';
 import SelectService from '../screens/Auth/SelectService';
+import SelectState from '../screens/Auth/SelectState';
 
 
 
@@ -21,6 +22,13 @@ const BusinessSignUpNavigation = () => {
       <Stack.Screen name="selectService" component={SelectService} 
        options={{
         title:"Business Services",
+        headerTransparent:false,
+        headerTitleAlign: 'center',
+      }}
+      />
+       <Stack.Screen name="selectstate" component={SelectState} 
+       options={{
+        title:"Select State",
         headerTransparent:false,
         headerTitleAlign: 'center',
       }}
