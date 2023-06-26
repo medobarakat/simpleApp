@@ -34,15 +34,15 @@ const validationSchema = Yup.object().shape({
   email: Yup.string().email('Invalid email').required('Email is required'),
   phone: Yup.string().required('Phone is required'),
   address1: Yup.string().required('Address is required'),
-  address2: Yup.string().required('Address 2 is required'),
+  address2: Yup.string(),
 });
 
 const Signup = ({navigation}) => {
-  const [country, setCountry] = useState('');
+  const [country, setCountry] = useState('United States');
   const [countryError, setCountryError] = useState(false);
   const [loading, setLoading] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
-  const [requestError, setRequestError] = useState("");
+  const [requestError, setRequestError] = useState('');
   const initialRef = useRef(null);
   const finalRef = useRef(null);
   const onSelect = country => {
@@ -72,13 +72,13 @@ const Signup = ({navigation}) => {
     } else {
       //  all validations passed
       // console.log(values);
-       handleFormSubmitApi(values);
+      handleFormSubmitApi(values);
     }
   };
 
   const handleFormSubmitApi = values => {
     setLoading(true);
-    setRequestError(false)
+    setRequestError(false);
     // console.log(values)
     // console.log(body)
     const url = Base_Url + Register_Api;
@@ -105,15 +105,14 @@ const Signup = ({navigation}) => {
       .then(res => {
         // console.log(res);
         setLoading(false);
-        console.log(res.data.message)
-          setModalVisible(true);
-      
+        console.log(res.data.message);
+        setModalVisible(true);
       })
       .catch(err => {
         setLoading(false);
         setRequestError(err.response.data[0].message);
         setError(true);
-        setRequestError("Please Check Your Information It Might Be Exist")
+        setRequestError('Please Check Your Information It Might Be Exist');
       });
   };
 
@@ -127,17 +126,16 @@ const Signup = ({navigation}) => {
           <Modal.Header>Success!</Modal.Header>
           <Modal.Body>
             <Text style={styles.modalText}>
-              Registration Was Successfully
+              Your Information Was Registered
             </Text>
           </Modal.Body>
           <Modal.Footer>
             <Button
               onPress={() => {
                 setModalVisible(false);
-                navigation.replace('login');
-              }}
-            >
-              Okay
+                navigation.replace('Home');
+              }}>
+              Close
             </Button>
           </Modal.Footer>
         </Modal.Content>
@@ -175,7 +173,6 @@ const Signup = ({navigation}) => {
         }) => (
           <>
             <View style={styles.inputContainer}>
-              
               <Text style={styles.span}>First Name</Text>
               <Animated.View
                 style={[
@@ -289,7 +286,7 @@ const Signup = ({navigation}) => {
                 ]}>
                 <TextInput
                   style={styles.input}
-                  placeholder="Adress 1"
+                  placeholder="Address 1"
                   onChangeText={handleChange('address1')}
                   onBlur={handleBlur('address1')}
                   value={values.address1}
@@ -343,7 +340,7 @@ const Signup = ({navigation}) => {
                 ]}>
                 <TextInput
                   style={styles.input}
-                  placeholder="City name"
+                  placeholder="City Name"
                   onChangeText={handleChange('city')}
                   onBlur={handleBlur('city')}
                   value={values.city}
@@ -378,7 +375,7 @@ const Signup = ({navigation}) => {
               {touched.state && errors.state && (
                 <Text style={styles.errorText}>{errors.state}</Text>
               )}
-               <Text style={styles.span}>Zip Code</Text>
+              <Text style={styles.span}>Zip Code</Text>
               <Animated.View
                 style={[
                   styles.inputWrapper,
@@ -406,14 +403,14 @@ const Signup = ({navigation}) => {
                 <Text style={styles.errorText}>{errors.zipCode}</Text>
               )}
               <Animated.View style={[styles.inputWrapper2]}>
-                <CountryPicker onSelect={e => onSelect(e.name)} />
+                <CountryPicker  onSelect={e => onSelect(e.name)} />
                 <Text style={styles.span}>{country}</Text>
               </Animated.View>
 
               {countryError && (
                 <Text style={styles.errorText}>Select A Country Please</Text>
               )}
-             
+
               <Text style={styles.span}>Email</Text>
 
               <Animated.View
@@ -471,7 +468,12 @@ const Signup = ({navigation}) => {
                 <Text style={styles.errorText}>{errors.phone}</Text>
               )}
             </View>
-            <ButtonLoader title={"Register"} handleSubmit={handleSubmit} loading={loading} errorMsg={requestError}/>
+            <ButtonLoader
+              title={'Register'}
+              handleSubmit={handleSubmit}
+              loading={loading}
+              errorMsg={requestError}
+            />
 
             {/* <TouchableOpacity onPress={handleSubmit} style={styles.button}>
               {loading === true ? (
@@ -585,7 +587,7 @@ const styles = StyleSheet.create({
     marginVertical: 15,
     color: 'black',
   },
-  modalText:{
-    color:"black"
-  }
+  modalText: {
+    color: 'black',
+  },
 });

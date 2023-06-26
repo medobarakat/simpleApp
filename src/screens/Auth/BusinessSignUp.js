@@ -33,11 +33,13 @@ const validationSchema = Yup.object().shape({
   email: Yup.string().email('Invalid email').required('Email is required'),
   phone: Yup.string().required('Phone is required'),
   address1: Yup.string().required('Address 1 is required'),
-  address2: Yup.string().required('Address 2 is required'),
+  address2: Yup.string(),
+  // address2: Yup.string().required('Address 2 is required'),
+
 });
 
 const BusinessSignUp = ({navigation}) => {
-  const [country, setCountry] = useState('');
+  const [country, setCountry] = useState('United States');
   const [countryError, setCountryError] = useState(false);
   const [loading, setLoading] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
@@ -133,15 +135,15 @@ const BusinessSignUp = ({navigation}) => {
         <Modal.Content maxWidth="400px">
           <Modal.Header>Success!</Modal.Header>
           <Modal.Body>
-            <Text style={styles.modalText}>Registration Was Successfully</Text>
+            <Text style={styles.modalText}>Your Information Was Registered</Text>
           </Modal.Body>
           <Modal.Footer>
             <Button
               onPress={() => {
                 setModalVisible(false);
-                navigation.replace('login');
+                navigation.replace('Home');
               }}>
-              Okay
+              Close
             </Button>
           </Modal.Footer>
         </Modal.Content>
@@ -285,7 +287,7 @@ const BusinessSignUp = ({navigation}) => {
                 ]}>
                 <TextInput
                   style={styles.input}
-                  placeholder="Adress 1"
+                  placeholder="Address 1"
                   onChangeText={handleChange('address1')}
                   onBlur={handleBlur('address1')}
                   value={values.address1}
@@ -338,7 +340,7 @@ const BusinessSignUp = ({navigation}) => {
                   ]}>
                   <TextInput
                     style={styles.input}
-                    placeholder="City name"
+                    placeholder="City Name"
                     onChangeText={handleChange('city')}
                     onBlur={handleBlur('city')}
                     value={values.city}

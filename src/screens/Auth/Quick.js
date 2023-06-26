@@ -69,17 +69,17 @@ const Quick = ({navigation}) => {
           <Modal.Header>Success!</Modal.Header>
           <Modal.Body>
             <Text style={styles.modalText}>
-              Quick Registration was Successfully
+            Your Information Was Registered
             </Text>
           </Modal.Body>
           <Modal.Footer>
             <Button
               onPress={() => {
                 setModalVisible(false);
-                navigation.replace('login');
+                navigation.replace('Home');
               }}
             >
-              Okay
+              Close
             </Button>
           </Modal.Footer>
         </Modal.Content>

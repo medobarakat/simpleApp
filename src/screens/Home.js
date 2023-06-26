@@ -10,6 +10,9 @@ import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import Icon from 'react-native-vector-icons/AntDesign';
 import { Primary_color, Sec_color } from '../constants/Colors';
 
+import { CloseIcon } from 'native-base';
+import MyIcon from '../assets/CloseIcon';
+
 const height = Dimensions.get('window').height;
 const width = Dimensions.get('window').width;
 
@@ -36,7 +39,7 @@ const Home = ({navigation}) => {
       extraScrollHeight={-100}>
       <View style={styles.firstSection}>
         <View style={styles.iconWrapper}>
-          <Icon name="closecircleo" size={70} />
+          {/* <Icon name="closecircleo" size={70} /> */}
         </View>
       </View>
       <View style={styles.secondSection}>
@@ -96,6 +99,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginBottom: height / 40,
     fontSize: 28,
+    color:"black"
   },
   btnContainer: {
     // marginTop: height / 19,
