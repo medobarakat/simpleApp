@@ -75,8 +75,6 @@ const BusinessSignUp = ({navigation}) => {
     }else if(selectedState === ""){
       setStateError(true)
     }else {
-      //  all validations passed
-      // console.log(values);
       handleFormSubmitApi(values);
     }
   };
