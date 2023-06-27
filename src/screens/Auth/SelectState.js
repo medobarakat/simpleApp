@@ -23,7 +23,7 @@ const SelectState = ({navigation, route}) => {
   useEffect(() => {
     setLoading(true);
     fetchData();
-    console.log(selectedState);
+    // console.log(selectedState);
   }, []);
 
   const fetchData = async () => {
